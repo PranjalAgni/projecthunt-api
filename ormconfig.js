@@ -8,7 +8,7 @@ module.exports = {
   password: "",
   logging: true,
   database: "shawarma",
-  entities: [join(__dirname, "**", "*.entity.{ts,js}")],
+  entities: [join(__dirname, "dist/entities", "*.{ts,js}")],
   migrations: [__dirname + "/src/migrations/*.{ts,js}"],
   subscribers: [__dirname + "/src/subscribers/*.{ts,js}"]
 };
