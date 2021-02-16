@@ -1,11 +1,4 @@
 import appRoot from "app-root-path";
-import dotenv from "dotenv";
-
-const config = dotenv.config();
-
-if (config.error) {
-  throw new Error("Could not find .env file");
-}
 
 process.env.NODE_ENV = "development" || process.env.NODE_ENV;
 

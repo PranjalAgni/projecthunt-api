@@ -1,4 +1,4 @@
-require("source-map-support").install();
+require("dotenv-safe").config();
 
 import debug from "debug";
 import "reflect-metadata";
