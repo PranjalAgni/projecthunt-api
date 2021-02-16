@@ -1,4 +1,5 @@
 import {
+  BaseEntity,
   CreateDateColumn,
   Entity,
   JoinColumn,
@@ -9,7 +10,7 @@ import { Project } from "./Project";
 import { User } from "./User";
 
 @Entity()
-export class Vote {
+export class Vote extends BaseEntity {
   @PrimaryGeneratedColumn()
   voteId: number;
 

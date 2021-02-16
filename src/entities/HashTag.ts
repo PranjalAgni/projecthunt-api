@@ -1,4 +1,5 @@
 import {
+  BaseEntity,
   Column,
   CreateDateColumn,
   Entity,
@@ -8,7 +9,7 @@ import {
 import { Project } from "./Project";
 
 @Entity()
-export class HashTag {
+export class HashTag extends BaseEntity {
   @PrimaryGeneratedColumn()
   hashTagId: number;
 
