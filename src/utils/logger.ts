@@ -1,0 +1,16 @@
+import winston from "winston";
+import config from "../config";
+
+const logger = winston.createLogger({
+  transports: [
+    new winston.transports.Console(config.winston.console),
+    new winston.transports.File(config.winston.file)
+  ],
+  exitOnError: false // do not exit on handled exceptions
+});
+
+export const loggerStreamWrite = (message: string) => {
+  logger.info(message);
+};
+
+export default logger;
