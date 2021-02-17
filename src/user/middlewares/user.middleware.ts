@@ -1,4 +1,8 @@
 import express from "express";
+import createError from "http-errors";
+import { StatusCodes } from "http-status-codes";
+import { assert } from "superstruct";
+import { CreateUserStruct } from "../dtos/user.dto";
 
 class UserMiddleware {
   private static instance: UserMiddleware;
@@ -10,17 +14,17 @@ class UserMiddleware {
     return UserMiddleware.instance;
   }
 
-  async validateRequiredUserBodyFields(
+  async validateCreateUserBody(
     req: express.Request,
     res: express.Response,
     next: express.NextFunction
   ) {
-    if (req.body && req.body.email && req.body.password) {
-      next();
-    } else {
-      res
-        .status(400)
-        .send({ error: `Missing required fields email and password` });
+    try {
+      assert(req.body, CreateUserStruct);
+      return next();
+    } catch (ex) {
+      res.status(StatusCodes.UNPROCESSABLE_ENTITY);
+      return next(createError(StatusCodes.UNPROCESSABLE_ENTITY, ex.message));
     }
   }
 }

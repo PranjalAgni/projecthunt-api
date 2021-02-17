@@ -1,14 +1,10 @@
-import { NextFunction, RequestHandler, Request, Response } from "express";
-import logger from "./logger";
+import { ResponseObject } from "./types";
 
-export const asyncUtil = (fn: RequestHandler) => (
-  req: Request,
-  res: Response,
-  next: NextFunction
-): Promise<unknown> => {
-  const fnReturn = fn(req, res, next);
-  return Promise.resolve(fnReturn).catch((err) => {
-    logger.error(err);
-    next(err);
+export const formatResponse = (payload: ResponseObject) => {
+  const { res, result, error = null, status } = payload;
+  res.status(status).json({
+    status,
+    result,
+    error
   });
 };

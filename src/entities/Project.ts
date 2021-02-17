@@ -50,7 +50,7 @@ export class Project extends BaseEntity {
 
   @Column({
     type: "varchar",
-    nullable: true
+    nullable: false
   })
   github: string;
 

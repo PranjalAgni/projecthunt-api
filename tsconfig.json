@@ -5,15 +5,17 @@
     "allowSyntheticDefaultImports": true,
     "target": "es6",
     "noImplicitAny": true,
-    "removeComments": true,
     "moduleResolution": "node",
     "sourceMap": true,
     "outDir": "dist",
     "baseUrl": ".",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
+    "paths": {
+      "*": ["node_modules/*", "./types/*"]
+    },
   },
-  "include": ["src/**/*.ts"],
+  "include": ["src/**/*", "./types/*"],
   "exclude": [
     "node_modules"
   ],
