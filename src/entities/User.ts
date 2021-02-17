@@ -4,6 +4,7 @@ import {
   CreateDateColumn,
   Entity,
   JoinColumn,
+  ManyToMany,
   ManyToOne,
   OneToOne,
   PrimaryGeneratedColumn
@@ -31,6 +32,9 @@ export class User extends BaseEntity {
   @JoinColumn({ name: "avatar" })
   @Column({ nullable: true })
   avatar: Image;
+
+  @ManyToMany(() => Project, (project) => project.users)
+  projects: Project[];
 
   @Column({
     type: "text",
@@ -62,9 +66,6 @@ export class User extends BaseEntity {
     nullable: true
   })
   facebook: string;
-
-  @ManyToOne(() => Project, (project) => project.users)
-  project: Project;
 
   @CreateDateColumn({ type: "timestamp" })
   createdAt: Date;

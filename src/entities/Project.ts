@@ -4,6 +4,8 @@ import {
   CreateDateColumn,
   Entity,
   JoinColumn,
+  JoinTable,
+  ManyToMany,
   OneToMany,
   PrimaryGeneratedColumn
 } from "typeorm";
@@ -38,8 +40,6 @@ export class Project extends BaseEntity {
   description: string;
 
   @OneToMany(() => Image, (image) => image.project)
-  @JoinColumn({ name: "images" })
-  @Column("int", { array: true })
   images: Image[];
 
   @Column({
@@ -60,14 +60,21 @@ export class Project extends BaseEntity {
   })
   youtube: string;
 
-  @OneToMany(() => User, (user) => user.project)
-  @JoinColumn({ name: "users" })
-  @Column("int", { array: true })
+  @ManyToMany(() => User, (user) => user.projects)
+  @JoinTable({
+    name: "map_project_user",
+    joinColumn: {
+      name: "projectId",
+      referencedColumnName: "projectId"
+    },
+    inverseJoinColumn: {
+      name: "userId",
+      referencedColumnName: "userId"
+    }
+  })
   users: User[];
 
   @OneToMany(() => HashTag, (hashTag) => hashTag.project)
-  @JoinColumn({ name: "tags" })
-  @Column("int", { array: true })
   tags: HashTag[];
 
   @CreateDateColumn({ type: "timestamp" })

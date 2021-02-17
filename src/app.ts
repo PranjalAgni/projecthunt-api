@@ -9,6 +9,7 @@ import { CommonRoutesConfig } from "./common/common.routes.config";
 import { ProjectRoutes } from "./project/project.config.routes";
 import { UserRoutes } from "./user/user.config.routes";
 import logger, { loggerStreamWrite } from "./utils/logger";
+import { seed } from "./utils/seed";
 
 const initalizeApp = async (): Promise<express.Application> => {
   const app: express.Application = express();
@@ -17,9 +18,12 @@ const initalizeApp = async (): Promise<express.Application> => {
 
   const db = await createConnection();
   debugLog("DB connected");
-  // await db.synchronize();
-  // debugLog("DB synced");
+  await db.synchronize();
+  debugLog("DB synced");
   logger.info("DB connected");
+
+  // await seed();
+  // debugLog("DB seeded");
 
   // If we are behind some reverse proxy like Nginx then we can trust this X-Forwarded-For header
   // Read More: https://stackoverflow.com/questions/39930070/nodejs-express-why-should-i-use-app-enabletrust-proxy

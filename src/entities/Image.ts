@@ -3,6 +3,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn
 } from "typeorm";
@@ -17,6 +18,7 @@ export class Image extends BaseEntity {
   url: string;
 
   @ManyToOne(() => Project, (project) => project.images)
+  @JoinColumn({ name: "projectId" })
   project: Project;
 
   @CreateDateColumn({ type: "timestamp" })

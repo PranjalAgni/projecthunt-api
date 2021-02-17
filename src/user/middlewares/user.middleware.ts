@@ -2,7 +2,7 @@ import express from "express";
 import createError from "http-errors";
 import { StatusCodes } from "http-status-codes";
 import { assert } from "superstruct";
-import { CreateUserStruct } from "../dtos/user.dto";
+import { CreateUserStruct, ReadUserStruct } from "../dtos/user.dto";
 
 class UserMiddleware {
   private static instance: UserMiddleware;
@@ -14,7 +14,16 @@ class UserMiddleware {
     return UserMiddleware.instance;
   }
 
-  async validateCreateUserBody(
+  invalidRequestBodyError(
+    res: express.Response,
+    next: express.NextFunction,
+    error: Error
+  ) {
+    res.status(StatusCodes.UNPROCESSABLE_ENTITY);
+    next(createError(StatusCodes.UNPROCESSABLE_ENTITY, error.message));
+  }
+
+  validateCreateUserBody(
     req: express.Request,
     res: express.Response,
     next: express.NextFunction
@@ -23,8 +32,28 @@ class UserMiddleware {
       assert(req.body, CreateUserStruct);
       return next();
     } catch (ex) {
-      res.status(StatusCodes.UNPROCESSABLE_ENTITY);
-      return next(createError(StatusCodes.UNPROCESSABLE_ENTITY, ex.message));
+      return UserMiddleware.getInstance().invalidRequestBodyError(
+        res,
+        next,
+        ex
+      );
+    }
+  }
+
+  validateReadUserParams(
+    req: express.Request,
+    res: express.Response,
+    next: express.NextFunction
+  ) {
+    try {
+      const params = req.query;
+      assert(params, ReadUserStruct);
+    } catch (ex) {
+      return UserMiddleware.getInstance().invalidRequestBodyError(
+        res,
+        next,
+        ex
+      );
     }
   }
 }

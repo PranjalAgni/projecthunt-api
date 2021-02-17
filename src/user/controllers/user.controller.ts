@@ -2,9 +2,12 @@ import debug from "debug";
 import { NextFunction, Request, Response } from "express";
 import createError from "http-errors";
 import { StatusCodes } from "http-status-codes";
-import logger from "../../utils/logger";
+import { create } from "superstruct";
 import { formatResponse } from "../../utils/express";
-import { CreateUserDto } from "../dtos/user.dto";
+import { createTokens } from "../../utils/jwt";
+import logger from "../../utils/logger";
+import { CreateUserDto, ReadUserDto, ReadUserStruct } from "../dtos/user.dto";
+import userService from "../services/user.service";
 
 const debugLog: debug.IDebugger = debug("server:user-controller");
 
@@ -19,17 +22,34 @@ class UserController {
     return UserController.instance;
   }
 
-  createUser(req: Request, res: Response, next: NextFunction) {
+  async createUser(req: Request, res: Response, next: NextFunction) {
     try {
       const data = req.body as CreateUserDto;
-
+      const user = await userService.create(data);
+      debugLog(user);
+      const { accessToken, refreshToken } = createTokens(user);
+      res.setHeader("access-token", accessToken);
+      res.setHeader("refresh-token", refreshToken);
       return formatResponse({
         res,
-        status: 200,
         result: { done: true }
       });
     } catch (ex) {
-      debugLog(ex.message);
+      logger.error(ex.message);
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR);
+      return next(createError(StatusCodes.INTERNAL_SERVER_ERROR, ex.message));
+    }
+  }
+
+  async getAllUsers(req: Request, res: Response, next: NextFunction) {
+    try {
+      const data = create(req.query, ReadUserStruct);
+      const userList = await userService.getAllUsers(data);
+      return formatResponse({
+        res,
+        result: userList
+      });
+    } catch (ex) {
       logger.error(ex.message);
       res.status(StatusCodes.INTERNAL_SERVER_ERROR);
       return next(createError(StatusCodes.INTERNAL_SERVER_ERROR, ex.message));

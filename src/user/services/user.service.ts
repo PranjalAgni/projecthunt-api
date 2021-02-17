@@ -1,7 +1,9 @@
 import { User } from "../../entities/User";
 import { CRUD } from "../../common/interfaces/crud.interface";
+import { CreateUserDto, ReadUserDto } from "../dtos/user.dto";
+import userDao from "../daos/user.dao";
 
-class UserService implements CRUD<User> {
+class UserService implements CRUD {
   private static instance: UserService;
 
   static getInstance(): UserService {
@@ -11,12 +13,24 @@ class UserService implements CRUD<User> {
     return UserService.instance;
   }
 
-  list: (limit: number, page: number) => Promise<User[]>;
-  create: (resource: User) => Promise<User>;
-  updateById: (resourceId: number) => Promise<User>;
-  readById: (resourceId: number) => Promise<User>;
-  deleteById: (resourceId: number) => Promise<User>;
-  patchById: (resourceId: number) => Promise<User>;
+  async create(userData: CreateUserDto): Promise<User> {
+    return await userDao.create(userData);
+  }
+
+  async getAllUsers(userData: ReadUserDto) {
+    let usersList: Array<User> = await userDao.getUsersOrderedByRecentProject(
+      userData.page,
+      userData.limit
+    );
+
+    return usersList;
+  }
+
+  list: (limit: number, page: number) => Promise<unknown>;
+  updateById: (resourceId: number) => Promise<unknown>;
+  readById: (resourceId: number) => Promise<unknown>;
+  deleteById: (resourceId: number) => Promise<unknown>;
+  patchById: (resourceId: number) => Promise<unknown>;
 }
 
 export default UserService.getInstance();

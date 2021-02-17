@@ -1,17 +1,9 @@
 import { sign, verify } from "jsonwebtoken";
 import config from "../config";
 import { User } from "../entities/User";
+import { AuthorizationTokens, JWTTokenData } from "./types";
 
-export type JWTTokenData = {
-  userId: number;
-};
-
-export const createTokens = (
-  user: User
-): {
-  refreshToken: string;
-  accessToken: string;
-} => {
+export const createTokens = (user: User): AuthorizationTokens => {
   const refreshToken = sign(
     { userId: user.userId },
     config.jwt.refreshTokenSecret,
