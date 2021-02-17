@@ -4,6 +4,7 @@ import {
   CreateDateColumn,
   Entity,
   JoinColumn,
+  ManyToMany,
   ManyToOne,
   PrimaryGeneratedColumn
 } from "typeorm";
@@ -21,8 +22,7 @@ export class HashTag extends BaseEntity {
   })
   tag: string;
 
-  @ManyToOne(() => Project, (project) => project.tags)
-  @JoinColumn({ name: "projectId" })
+  @ManyToMany(() => Project, (project) => project.tags)
   project: Project;
 
   @CreateDateColumn({ type: "timestamp" })

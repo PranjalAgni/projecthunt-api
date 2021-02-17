@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "seed": "ts-node scripts/seed.ts",
     "watch": "tsc -w",
     "build": "rimraf ./dist && tsc",
     "start": "npm run build && node dist/server.js",

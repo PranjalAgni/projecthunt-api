@@ -74,7 +74,18 @@ export class Project extends BaseEntity {
   })
   users: User[];
 
-  @OneToMany(() => HashTag, (hashTag) => hashTag.project)
+  @ManyToMany(() => HashTag, (hashTag) => hashTag.project)
+  @JoinTable({
+    name: "map_project_hashtag",
+    joinColumn: {
+      name: "projectId",
+      referencedColumnName: "projectId"
+    },
+    inverseJoinColumn: {
+      name: "hashTagId",
+      referencedColumnName: "hashTagId"
+    }
+  })
   tags: HashTag[];
 
   @CreateDateColumn({ type: "timestamp" })
