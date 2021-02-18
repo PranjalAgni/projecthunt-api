@@ -1,9 +1,10 @@
 import {
   BaseEntity,
+  Column,
   CreateDateColumn,
   Entity,
   JoinColumn,
-  OneToOne,
+  ManyToOne,
   PrimaryGeneratedColumn
 } from "typeorm";
 import { Project } from "./Project";
@@ -14,11 +15,14 @@ export class Vote extends BaseEntity {
   @PrimaryGeneratedColumn()
   voteId: number;
 
-  @OneToOne(() => User)
+  @Column({ type: "integer", nullable: false })
+  value: number;
+
+  @ManyToOne(() => User)
   @JoinColumn({ name: "user" })
   user: User;
 
-  @OneToOne(() => Project)
+  @ManyToOne(() => Project)
   @JoinColumn({ name: "project" })
   project: Project;
 

@@ -26,7 +26,11 @@ class UserDao {
     });
   }
 
-  async getUsersOrderedByPopularity() {}
+  async getUsersOrderedByPopularity() {
+    return await getConnection().query(`
+    SELECT mpu."userId" FROM public.map_project_user as mpu INNER JOIN (SELECT v."project", SUM(v.value) as upvotes FROM public.vote as v WHERE v."value" = 1 GROUP BY v."project") as v ON v."project" = mpu."projectId" ORDER BY v."upvotes" DESC;
+    `);
+  }
 
   async getUsersOrderedByRecentProject(page: number, limit: number) {
     return await getRepository(User)
