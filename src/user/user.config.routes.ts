@@ -13,11 +13,7 @@ export class UserRoutes extends CommonRoutesConfig {
     this.app
       .route("/users")
       .get(userController.getAllUsers)
-      .post([
-        commonMiddleware.isAuth,
-        userMiddleware.validateCreateUserBody,
-        userController.createUser
-      ]);
+      .post([userMiddleware.validateCreateUserBody, userController.createUser]);
 
     this.app.route("/users/:userId").get([userController.getUserById]);
 
@@ -25,7 +21,9 @@ export class UserRoutes extends CommonRoutesConfig {
       .route("/users/:userId/projects")
       .get([userController.getProjectsByUserId]);
 
-    this.app.route("/users/:userId/votes").get(userController.getVotesByUserId);
+    this.app
+      .route("/users/:userId/votes")
+      .get([commonMiddleware.isAuth, userController.getVotesByUserId]);
 
     this.app
       .route("/users/:userId/comments")

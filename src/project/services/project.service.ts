@@ -1,6 +1,6 @@
-import { Request, Response, NextFunction } from "express";
 import { CRUD } from "../../common/interfaces/crud.interface";
 import projectDao from "../daos/project.dao";
+import { CreateProjectDto } from "../dtos/project.dto";
 
 class ProjectService implements CRUD {
   private static instance: ProjectService;
@@ -10,6 +10,10 @@ class ProjectService implements CRUD {
       ProjectService.instance = new ProjectService();
     }
     return ProjectService.instance;
+  }
+
+  async create(projectData: CreateProjectDto) {
+    return await projectDao.create(projectData);
   }
 
   async getProjectByUserId(userId: number, page: number, limit: number) {
@@ -22,7 +26,6 @@ class ProjectService implements CRUD {
     return projectList;
   }
 
-  create: (resource: unknown) => Promise<unknown>;
   list: (limit: number, page: number) => Promise<unknown>;
   updateById: (resourceId: number) => Promise<unknown>;
   readById: (resourceId: number) => Promise<unknown>;
