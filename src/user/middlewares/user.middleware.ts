@@ -2,7 +2,11 @@ import express from "express";
 import createError from "http-errors";
 import { StatusCodes } from "http-status-codes";
 import { assert } from "superstruct";
-import { CreateUserStruct, ReadUserStruct } from "../dtos/user.dto";
+import {
+  CreateUserStruct,
+  ReadUserByIdStruct,
+  ReadUserStruct
+} from "../dtos/user.dto";
 
 class UserMiddleware {
   private static instance: UserMiddleware;
@@ -40,14 +44,14 @@ class UserMiddleware {
     }
   }
 
-  validateReadUserParams(
+  validateUserId(
     req: express.Request,
     res: express.Response,
     next: express.NextFunction
   ) {
     try {
-      const params = req.query;
-      assert(params, ReadUserStruct);
+      const params = req.params;
+      assert(params, ReadUserByIdStruct);
     } catch (ex) {
       return UserMiddleware.getInstance().invalidRequestBodyError(
         res,

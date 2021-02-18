@@ -1,7 +1,8 @@
-import { User } from "../../entities/User";
+import projectDao from "../../project/daos/project.dao";
 import { CRUD } from "../../common/interfaces/crud.interface";
-import { CreateUserDto, ReadUserDto } from "../dtos/user.dto";
+import { User } from "../../entities/User";
 import userDao from "../daos/user.dao";
+import { CreateUserDto, ReadUserDto } from "../dtos/user.dto";
 
 class UserService implements CRUD {
   private static instance: UserService;
@@ -18,13 +19,27 @@ class UserService implements CRUD {
   }
 
   async getAllUsers(userData: ReadUserDto) {
-    let usersList: Array<User> = await userDao.getUsersOrderedByRecentProject(
-      userData.page,
-      userData.limit
-    );
+    let usersList: Array<User> | null = null;
+    if (userData.sortBy === "popular") {
+      usersList = await userDao.getUsersOrderedByPopularity(
+        userData.page,
+        userData.limit
+      );
+    } else {
+      usersList = await userDao.getUsersOrderedByRecentProject(
+        userData.page,
+        userData.limit
+      );
+    }
 
     return usersList;
   }
+
+  async findUserById(userId: number) {
+    return await userDao.findOne(userId);
+  }
+
+  async getVotesByUserId(userId: number) {}
 
   list: (limit: number, page: number) => Promise<unknown>;
   updateById: (resourceId: number) => Promise<unknown>;

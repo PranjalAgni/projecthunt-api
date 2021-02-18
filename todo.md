@@ -1,16 +1,16 @@
-### GET /users []
+### GET /users [x]
 
 - Query Params
   - ?sortBy
-    - popular
-    - recent (people who have recently uploaded a product)
+    - popular []
+    - recent (people who have recently uploaded a product) [x]
 - Must be paginated
 
-### GET /users/{userId} []
+### GET /users/{userId} [x]
 
 Get a single user.
 
-### GET /users/{userId}/projects []
+### GET /users/{userId}/projects [x]
 
 Projects of a particular user
 

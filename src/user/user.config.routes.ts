@@ -12,12 +12,20 @@ export class UserRoutes extends CommonRoutesConfig {
   configureRoutes(): express.Application {
     this.app
       .route("/users")
-      .get([userController.getAllUsers])
+      .get(userController.getAllUsers)
       .post([
         commonMiddleware.isAuth,
         userMiddleware.validateCreateUserBody,
         userController.createUser
       ]);
+
+    this.app.route("/users/:userId").get([userController.getUserById]);
+
+    this.app
+      .route("/users/:userId/projects")
+      .get([userController.getProjectsByUserId]);
+
+    this.app.route("/users/:userId/votes").get();
     return this.app;
   }
 }

@@ -19,8 +19,6 @@ export const CreateUserStruct = object({
   twitter: optional(string())
 });
 
-export type CreateUserDto = Infer<typeof CreateUserStruct>;
-
 export const ReadUserStruct = object({
   sortBy: defaulted(string(), "popular"),
   page: defaulted(
@@ -33,4 +31,10 @@ export const ReadUserStruct = object({
   )
 });
 
+export const ReadUserByIdStruct = object({
+  userId: coerce(number(), string(), (value) => +value)
+});
+
+export type CreateUserDto = Infer<typeof CreateUserStruct>;
 export type ReadUserDto = Infer<typeof ReadUserStruct>;
+export type ReadUserByIdDto = Infer<typeof ReadUserByIdStruct>;
