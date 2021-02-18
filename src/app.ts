@@ -17,8 +17,8 @@ const initalizeApp = async (): Promise<express.Application> => {
 
   const db = await createConnection();
   debugLog("DB connected");
-  // await db.synchronize();
-  // debugLog("DB synced");
+  await db.synchronize();
+  debugLog("DB synced");
   logger.info("DB connected");
 
   // If we are behind some reverse proxy like Nginx then we can trust this X-Forwarded-For header

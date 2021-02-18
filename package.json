@@ -6,7 +6,8 @@
   "scripts": {
     "seed": "ts-node scripts/seed.ts",
     "watch": "tsc -w",
-    "build": "rimraf ./dist && tsc",
+    "clean": "rimraf ./dist",
+    "build": "npm run clean && tsc",
     "start": "npm run build && node dist/server.js",
     "start:dev": "nodemon",
     "lint": "eslint . --ext .ts"

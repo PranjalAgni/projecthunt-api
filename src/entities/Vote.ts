@@ -5,12 +5,14 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
-  PrimaryGeneratedColumn
+  PrimaryGeneratedColumn,
+  Unique
 } from "typeorm";
 import { Project } from "./Project";
 import { User } from "./User";
 
 @Entity()
+@Unique("user_project_index", ["user", "project"])
 export class Vote extends BaseEntity {
   @PrimaryGeneratedColumn()
   voteId: number;
