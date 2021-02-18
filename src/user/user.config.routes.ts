@@ -25,7 +25,13 @@ export class UserRoutes extends CommonRoutesConfig {
       .route("/users/:userId/projects")
       .get([userController.getProjectsByUserId]);
 
-    this.app.route("/users/:userId/votes").get();
+    this.app.route("/users/:userId/votes").get(userController.getVotesByUserId);
+
+    this.app
+      .route("/users/:userId/comments")
+      .get(userController.getCommentsByUserId);
+
+    this.app.route("/hashtags").get(userController.getHashTags);
     return this.app;
   }
 }

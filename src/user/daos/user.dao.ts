@@ -1,8 +1,9 @@
 import debug from "debug";
-import { getReasonPhrase } from "http-status-codes";
-import { Vote } from "../../entities/Vote";
+import { HashTag } from "../../entities/HashTag";
 import { getConnection, getRepository } from "typeorm";
+import { Comment } from "../../entities/Comment";
 import { User } from "../../entities/User";
+import { Vote } from "../../entities/Vote";
 import { CreateUserDto } from "../dtos/user.dto";
 
 const debugLog: debug.IDebugger = debug("server:user-dao");
@@ -51,7 +52,23 @@ class UserDao {
   async getVotesByUserId(userId: number) {
     return await getRepository(Vote)
       .createQueryBuilder("vote")
-      .where("vote.users.userId = :userId", { userId })
+      .leftJoin("vote.user", "user")
+      .where("user.userId = :userId", { userId })
+      .getMany();
+  }
+
+  async getCommentsByUserId(userId: number) {
+    return await getRepository(Comment)
+      .createQueryBuilder("comment")
+      .select(['comment."commentId"', "comment.title", "comment.body"])
+      .where('comment."user" = :userId', { userId })
+      .getMany();
+  }
+
+  async getHashTags() {
+    return await getRepository(HashTag)
+      .createQueryBuilder("hashtag")
+      .select("hashtag.tag")
       .getMany();
   }
 }

@@ -39,7 +39,17 @@ class UserService implements CRUD {
     return await userDao.findOne(userId);
   }
 
-  async getVotesByUserId(userId: number) {}
+  async getVotesByUserId(userId: number) {
+    return await userDao.getVotesByUserId(userId);
+  }
+
+  async getCommentsByUserId(userId: number) {
+    return await userDao.getCommentsByUserId(userId);
+  }
+
+  async getHashTags() {
+    return await userDao.getHashTags();
+  }
 
   list: (limit: number, page: number) => Promise<unknown>;
   updateById: (resourceId: number) => Promise<unknown>;

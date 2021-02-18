@@ -19,7 +19,7 @@ class ProjectDao {
 
     return await getRepository(Project)
       .createQueryBuilder("project")
-      .leftJoinAndSelect("project.users", "user")
+      .leftJoin("project.users", "user")
       .where("user.userId = :userId", { userId })
       .skip(offset)
       .take(limit)

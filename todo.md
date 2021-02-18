@@ -16,10 +16,43 @@ Projects of a particular user
 
 - Must be paginated
 
-### GET /users/{userId}/votes []
+### GET /users/{userId}/votes [x]
 
-### GET /users/{userId}/comments []
+### GET /users/{userId}/comments [x]
 
-### GET /hashtags []
+### GET /hashtags [x]
 
 list of all hashtags
+
+### POST /projects []
+
+Create a new project
+
+### GET /projects []
+
+- Query Params
+  - ?sortBy
+    - new
+    - trending
+    - popular
+  - ?name=X
+    - search for projects like %X%
+  - ?tag=xxx
+    - list all projects of hashtag xxx
+- Must be paginated
+
+### GET /projects/{projectId} []
+
+Fetches a single project by project id
+
+### POST /projects/{projectId}/vote []
+
+```jsx
+{
+  value: 1;
+}
+```
+
+### POST /projects/{projectId}/comments []
+
+### GET /projects/{projetId}/comments []

@@ -19,10 +19,6 @@ class ProjectService implements CRUD {
       limit
     );
 
-    projectList.forEach((project) => {
-      delete project.users;
-    });
-
     return projectList;
   }
 
