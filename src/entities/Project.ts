@@ -2,6 +2,7 @@ import {
   BaseEntity,
   Column,
   CreateDateColumn,
+  DeleteDateColumn,
   Entity,
   JoinColumn,
   JoinTable,
@@ -94,6 +95,6 @@ export class Project extends BaseEntity {
   @CreateDateColumn({ type: "timestamp" })
   updatedAt: Date;
 
-  @CreateDateColumn({ type: "timestamp" })
+  @DeleteDateColumn()
   deletedAt: Date;
 }

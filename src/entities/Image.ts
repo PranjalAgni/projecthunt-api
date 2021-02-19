@@ -2,6 +2,7 @@ import {
   BaseEntity,
   Column,
   CreateDateColumn,
+  DeleteDateColumn,
   Entity,
   JoinColumn,
   ManyToOne,
@@ -27,6 +28,6 @@ export class Image extends BaseEntity {
   @CreateDateColumn({ type: "timestamp" })
   updatedAt: Date;
 
-  @CreateDateColumn({ type: "timestamp" })
+  @DeleteDateColumn()
   deletedAt: Date;
 }

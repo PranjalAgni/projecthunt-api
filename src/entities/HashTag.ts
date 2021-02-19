@@ -2,6 +2,7 @@ import {
   BaseEntity,
   Column,
   CreateDateColumn,
+  DeleteDateColumn,
   Entity,
   JoinColumn,
   ManyToMany,
@@ -31,6 +32,6 @@ export class HashTag extends BaseEntity {
   @CreateDateColumn({ type: "timestamp" })
   updatedAt: Date;
 
-  @CreateDateColumn({ type: "timestamp" })
+  @DeleteDateColumn()
   deletedAt: Date;
 }
