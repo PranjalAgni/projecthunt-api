@@ -5,10 +5,10 @@ module.exports = {
   type: "postgres",
   host: "localhost",
   port: 5432,
-  username: "pranjal",
-  password: "",
+  username: "hunter",
+  password: "root",
   logging: true,
-  database: "shawarma",
+  database: "project_hunt",
   entities: [join(__dirname, "dist/entities", "*.{ts,js}")],
   migrations: [__dirname + "/src/migrations/*.{ts,js}"],
   subscribers: [__dirname + "/src/subscribers/*.{ts,js}"]
