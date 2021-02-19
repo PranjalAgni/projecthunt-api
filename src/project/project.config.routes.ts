@@ -10,13 +10,25 @@ export class ProjectRoutes extends CommonRoutesConfig {
   }
 
   configureRoutes(): express.Application {
+    console.log("Project:: configureRoutes()");
     this.app
       .route("/projects")
       .post([
-        commonMiddleware.isAuth,
         projectMiddleware.validateCreateProjectBody,
         projectController.createProject
       ]);
+
+    this.app
+      .route("/projects/:projectId/vote")
+      .post([
+        commonMiddleware.isAuth,
+        projectController.getTotalVotesOfProject
+      ]);
+
+    this.app
+      .route("/projects/:projectId/comments")
+      .get([commonMiddleware.isAuth, projectController.getComments])
+      .post([commonMiddleware.isAuth, projectController.createComment]);
 
     return this.app;
   }

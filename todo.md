@@ -24,7 +24,7 @@ Projects of a particular user
 
 list of all hashtags
 
-### POST /projects []
+### POST /projects [x]
 
 Create a new project
 
@@ -45,7 +45,7 @@ Create a new project
 
 Fetches a single project by project id
 
-### POST /projects/{projectId}/vote []
+### POST /projects/{projectId}/vote [x]
 
 ```jsx
 {
@@ -53,6 +53,6 @@ Fetches a single project by project id
 }
 ```
 
-### POST /projects/{projectId}/comments []
+### POST /projects/{projectId}/comments [x]
 
-### GET /projects/{projetId}/comments []
+### GET /projects/{projectId}/comments [x]

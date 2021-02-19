@@ -30,4 +30,15 @@ export const ReadProjectByUserIdStruct = object({
   )
 });
 
+export const CreateCommentStruct = object({
+  title: size(string(), 3, 50),
+  body: size(string(), 3, 1000),
+  projectId: coerce(number(), string(), (val) => +val)
+});
+
+export const ReadProjectIdStruct = object({
+  projectId: coerce(number(), string(), (value) => +value)
+});
+
 export type CreateProjectDto = Infer<typeof CreateProjectStruct>;
+export type CreateCommentDto = Infer<typeof CreateCommentStruct>;

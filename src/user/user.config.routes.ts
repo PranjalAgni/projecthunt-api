@@ -3,6 +3,7 @@ import { CommonRoutesConfig } from "../common/common.routes.config";
 import userController from "./controllers/user.controller";
 import commonMiddleware from "../common/middlewares/common.middleware";
 import userMiddleware from "./middlewares/user.middleware";
+import projectController from "../project/controllers/project.controller";
 
 export class UserRoutes extends CommonRoutesConfig {
   constructor(app: express.Application) {
@@ -10,6 +11,7 @@ export class UserRoutes extends CommonRoutesConfig {
   }
 
   configureRoutes(): express.Application {
+    console.log("User:: configureRoutes()");
     this.app
       .route("/users")
       .get(userController.getAllUsers)
@@ -30,6 +32,7 @@ export class UserRoutes extends CommonRoutesConfig {
       .get(userController.getCommentsByUserId);
 
     this.app.route("/hashtags").get(userController.getHashTags);
+
     return this.app;
   }
 }

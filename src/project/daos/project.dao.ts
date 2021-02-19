@@ -1,9 +1,12 @@
 import debug from "debug";
+import { Vote } from "../../entities/Vote";
 import { getRepository } from "typeorm";
 import { Project } from "../../entities/Project";
 import { CreateProjectDto } from "../dtos/project.dto";
+import { Comment } from "../../entities/Comment";
+import { User } from "../../entities/User";
 
-const debugLog: debug.IDebugger = debug("server:user-dao");
+const debugLog: debug.IDebugger = debug("server:project-dao");
 
 class ProjectDao {
   private static instance: ProjectDao;
@@ -29,6 +32,67 @@ class ProjectDao {
       .skip(offset)
       .take(limit)
       .getMany();
+  }
+
+  async getProjects(
+    sortBy: string,
+    name: string,
+    tag: string,
+    page: number,
+    limit: number
+  ) {
+    let getProjectsQuery = getRepository(Project).createQueryBuilder("project");
+    if (name) {
+      getProjectsQuery = getProjectsQuery.andWhere("project.title LIKE :name", {
+        name: `%${name}%`
+      });
+    }
+
+    if (tag) {
+      getProjectsQuery = getProjectsQuery
+        .leftJoin("project.tags", "tags")
+        .where("tags.tag = :tag", { tag });
+    }
+
+    if (sortBy === "new") {
+      getProjectsQuery = getProjectsQuery.orderBy("project.createdAt DESC");
+    } else if (sortBy === "trending") {
+      // check p.createdAt of last 7 days and sum the votes
+      getProjectsQuery = getProjectsQuery.orderBy("project.createdAt DESC");
+    } else if (sortBy === "popular") {
+    }
+  }
+
+  async findOne(projectId: number) {
+    return await getRepository(Project).findOne({
+      projectId
+    });
+  }
+
+  async getVotesOnProject(projectId: number) {
+    return await getRepository(Vote)
+      .createQueryBuilder("vote")
+      .where("vote.project = :projectId", { projectId })
+      .andWhere("vote.value = 1")
+      .getCount();
+  }
+
+  async getCommentsByProjectId(projectId: number) {
+    return await getRepository(Comment)
+      .createQueryBuilder("comment")
+      .select(["comment.title", "comment.body"])
+      .where("comment.project = :projectId", { projectId })
+      .getMany();
+  }
+
+  async createComment(comment: Comment) {
+    return await getRepository(Comment).save(comment);
+  }
+
+  async findById(projectId: number) {
+    return await getRepository(Project).findOne({
+      projectId
+    });
   }
 }
 

@@ -9,16 +9,15 @@ export abstract class CommonRoutesConfig {
     this.app = app;
     this.name = name;
     this.configureRoutes();
-    this.applyCommonMiddlewares();
   }
 
   getName(): string {
     return this.name;
   }
 
-  applyCommonMiddlewares(): void {
-    this.app.use(commonMiddleware.notFound);
-    this.app.use(commonMiddleware.errorHandler);
+  static applyCommonMiddlewares(app: express.Application): void {
+    app.use(commonMiddleware.notFound);
+    app.use(commonMiddleware.errorHandler);
   }
 
   abstract configureRoutes(): express.Application;

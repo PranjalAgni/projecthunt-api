@@ -1,7 +1,7 @@
 import express from "express";
 import { StatusCodes } from "http-status-codes";
 import { assert } from "superstruct";
-import { CreateProjectStruct } from "../dtos/project.dto";
+import { CreateCommentStruct, CreateProjectStruct } from "../dtos/project.dto";
 import createError from "http-errors";
 
 class ProjectMiddleware {
