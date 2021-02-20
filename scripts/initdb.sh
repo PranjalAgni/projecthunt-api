@@ -1,0 +1,1 @@
+docker exec -it projecthunt_postgres_1 psql -U postgres -c "CREATE DATABASE shawarma;"

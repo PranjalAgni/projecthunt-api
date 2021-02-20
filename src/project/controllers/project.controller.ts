@@ -12,6 +12,7 @@ import {
   ReadProjectIdStruct
 } from "../dtos/project.dto";
 import projectService from "../services/project.service";
+
 const debugLog: debug.IDebugger = debug("server:project-controller");
 
 class ProjectController {
@@ -39,6 +40,21 @@ class ProjectController {
     }
   }
 
+  async getProjectById(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { projectId } = create(req.params, ReadProjectIdStruct);
+      const project = await projectService.findById(projectId);
+      return formatResponse({
+        res,
+        result: project
+      });
+    } catch (ex) {
+      logger.error(ex.message);
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR);
+      return next(createError(StatusCodes.INTERNAL_SERVER_ERROR, ex.message));
+    }
+  }
+
   async createComment(req: Request, res: Response, next: NextFunction) {
     try {
       const body = create(
@@ -55,7 +71,6 @@ class ProjectController {
       }
 
       const user = await userService.findUserById(req.userId);
-      debugLog(user);
       const comment = await projectService.createComment(user, project, body);
       return formatResponse({
         res,

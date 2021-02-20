@@ -10,6 +10,12 @@ export default {
     accessTokenSecret: process.env.ACCESS_TOKEN_SECRET,
     refreshTokenSecret: process.env.REFRESH_TOKEN_SECRET
   },
+  db: {
+    host: process.env.DB_HOST,
+    name: process.env.DB_SCHEMA,
+    username: process.env.DB_USER,
+    password: process.env.DB_PASSWORD
+  },
   winston: {
     file: {
       level: "info",

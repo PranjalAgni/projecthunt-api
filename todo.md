@@ -41,7 +41,7 @@ Create a new project
     - list all projects of hashtag xxx
 - Must be paginated
 
-### GET /projects/{projectId} []
+### GET /projects/{projectId} [x]
 
 Fetches a single project by project id
 

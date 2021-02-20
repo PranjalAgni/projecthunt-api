@@ -1,35 +1,44 @@
-<h1 align="center">Welcome to projecthunt-api 👋</h1>
+<h1 align="center">ProjectHunt API :sparkles: :sunflower: :seedling:</h1>
 <p>
   <img alt="Version" src="https://img.shields.io/badge/version-1.0.0-blue.svg?cacheSeconds=2592000" />
   <a href="#" target="_blank">
-    <img alt="License: ISC" src="https://img.shields.io/badge/License-ISC-yellow.svg" />
+    <img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg" />
   </a>
 </p>
 
-> API for projecthunt 
+## Setup Locally
 
-## Install
+1. Duplicate and rename .env.example to .env and provide all environment var
+
+2. Provide right DB username,password,schema
+
+## Running the server
+
+#### Without Docker
 
 ```sh
-npm i 
+npm i
+npm run watch
 ```
 
-## Usage
+- Open other terminal window and run dev server
 
 ```sh
 npm run start:dev
 ```
 
-## Author
+#### With Docker
 
-👤 **Pranjal Agnihotri**
+```sh
+docker-compose up --build
+```
 
-* Website: https://twitter.com/PranjalAgnihot8
-* Github: [@PranjalAgni](https://github.com/PranjalAgni)
+If you get DB does not exists, simply run this:
+
+```sh
+sh scripts/initdb.sh
+```
 
 ## Show your support
 
 Give a ⭐️ if this project helped you!
-
-***
-_This README was generated with ❤️ by [readme-md-generator](https://github.com/kefranabg/readme-md-generator)_

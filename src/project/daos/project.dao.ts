@@ -1,10 +1,9 @@
 import debug from "debug";
-import { Vote } from "../../entities/Vote";
 import { getRepository } from "typeorm";
-import { Project } from "../../entities/Project";
-import { CreateProjectDto } from "../dtos/project.dto";
 import { Comment } from "../../entities/Comment";
-import { User } from "../../entities/User";
+import { Project } from "../../entities/Project";
+import { Vote } from "../../entities/Vote";
+import { CreateProjectDto } from "../dtos/project.dto";
 
 const debugLog: debug.IDebugger = debug("server:project-dao");
 

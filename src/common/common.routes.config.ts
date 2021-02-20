@@ -15,7 +15,7 @@ export abstract class CommonRoutesConfig {
     return this.name;
   }
 
-  static applyCommonMiddlewares(app: express.Application): void {
+  static applyErrorHandleMiddlewares(app: express.Application): void {
     app.use(commonMiddleware.notFound);
     app.use(commonMiddleware.errorHandler);
   }

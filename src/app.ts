@@ -6,7 +6,6 @@ import helmet from "helmet";
 import morgan from "morgan";
 import { createConnection } from "typeorm";
 import { CommonRoutesConfig } from "./common/common.routes.config";
-import commonMiddleware from "./common/middlewares/common.middleware";
 import { ProjectRoutes } from "./project/project.config.routes";
 import { UserRoutes } from "./user/user.config.routes";
 import logger, { loggerStreamWrite } from "./utils/logger";
@@ -39,7 +38,7 @@ const initalizeApp = async (): Promise<express.Application> => {
   );
 
   routes.push(new UserRoutes(app), new ProjectRoutes(app));
-  CommonRoutesConfig.applyCommonMiddlewares(app);
+  CommonRoutesConfig.applyErrorHandleMiddlewares(app);
 
   app.get("/", (_req: express.Request, res: express.Response) => {
     res

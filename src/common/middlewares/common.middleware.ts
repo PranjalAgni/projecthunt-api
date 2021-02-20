@@ -2,8 +2,8 @@ import debug from "debug";
 import { NextFunction, Request, Response } from "express";
 import createError from "http-errors";
 import { getReasonPhrase, StatusCodes } from "http-status-codes";
-import userDao from "../../user/daos/user.dao";
 import config from "../../config";
+import userDao from "../../user/daos/user.dao";
 import {
   createTokens,
   verifyAccessToken,

@@ -1,0 +1,21 @@
+version: "3.7"
+services:
+  postgres:
+    image: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - shawarma-db:/var/lib/postgresql/data
+  project-hunt-server:
+    build:
+      context: .
+    depends_on:
+      - postgres
+    ports:
+      - "1234:1234"
+
+volumes:
+  shawarma-db:

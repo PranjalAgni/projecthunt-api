@@ -10,13 +10,16 @@ export class ProjectRoutes extends CommonRoutesConfig {
   }
 
   configureRoutes(): express.Application {
-    console.log("Project:: configureRoutes()");
     this.app
       .route("/projects")
       .post([
         projectMiddleware.validateCreateProjectBody,
         projectController.createProject
       ]);
+
+    this.app
+      .route("/projects/:projectId")
+      .get([commonMiddleware.isAuth, projectController.getProjectById]);
 
     this.app
       .route("/projects/:projectId/vote")

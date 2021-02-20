@@ -3,12 +3,12 @@ const { join } = require("path");
 module.exports = {
   name: "default",
   type: "postgres",
-  host: "localhost",
+  host: process.env.DB_HOST,
   port: 5432,
-  username: "pranjal",
-  password: "",
+  username: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
   logging: true,
-  database: "shawarma",
+  database: process.env.DB_SCHEMA,
   entities: [join(__dirname, "dist/entities", "*.{ts,js}")],
   migrations: [__dirname + "/src/migrations/*.{ts,js}"],
   subscribers: [__dirname + "/src/subscribers/*.{ts,js}"]
