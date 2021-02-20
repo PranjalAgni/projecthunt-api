@@ -39,6 +39,16 @@ If you get DB does not exists, simply run this:
 sh scripts/initdb.sh
 ```
 
+## Scripts
+
+1. seed - DB seed script, will insert dummy data
+2. watch - Watcher, for changes in TS files
+3. clean - Removes dist folder
+4. build - Compiles TS files, and spits JS version
+5. start - Start the server in prod mode
+6. start:dev - Start the server in dev mode
+7. lint - Lint the TS files with eslint
+
 ## Show your support
 
 Give a ⭐️ if this project helped you!

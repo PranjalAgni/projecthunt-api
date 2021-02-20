@@ -3,9 +3,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  JoinColumn,
   ManyToMany,
-  ManyToOne,
   PrimaryGeneratedColumn
 } from "typeorm";
 import { Project } from "./Project";

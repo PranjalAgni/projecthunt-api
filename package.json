@@ -8,8 +8,8 @@
     "watch": "tsc -w",
     "clean": "rimraf ./dist",
     "build": "npm run clean && tsc",
-    "start": "npm run build && node dist/server.js",
-    "start:dev": "nodemon",
+    "start": "cross-env NODE_ENV=production npm run build && node dist/server.js",
+    "start:dev": "cross-env DEBUG=server* nodemon",
     "lint": "eslint . --ext .ts"
   },
   "keywords": [],
@@ -29,6 +29,7 @@
     "@types/winston": "^2.4.4",
     "@typescript-eslint/eslint-plugin": "^4.15.1",
     "@typescript-eslint/parser": "^4.15.1",
+    "cross-env": "^7.0.3",
     "eslint": "^7.20.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-config-prettier": "^7.2.0",
@@ -51,6 +52,7 @@
     "jsonwebtoken": "^8.5.1",
     "morgan": "^1.10.0",
     "pg": "^8.5.1",
+    "prettier": "^2.2.1",
     "superstruct": "^0.14.2",
     "typeorm": "^0.2.31",
     "winston": "^3.3.3"
