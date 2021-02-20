@@ -1,8 +1,8 @@
 import express from "express";
+import createError from "http-errors";
 import { StatusCodes } from "http-status-codes";
 import { assert } from "superstruct";
-import { CreateCommentStruct, CreateProjectStruct } from "../dtos/project.dto";
-import createError from "http-errors";
+import { CreateProjectStruct } from "../dtos/project.dto";
 
 class ProjectMiddleware {
   private static instance: ProjectMiddleware;

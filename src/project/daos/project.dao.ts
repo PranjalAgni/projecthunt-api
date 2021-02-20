@@ -1,11 +1,10 @@
-import debug from "debug";
 import { getRepository } from "typeorm";
 import { Comment } from "../../entities/Comment";
 import { Project } from "../../entities/Project";
 import { Vote } from "../../entities/Vote";
 import { CreateProjectDto } from "../dtos/project.dto";
 
-const debugLog: debug.IDebugger = debug("server:project-dao");
+// const debugLog: debug.IDebugger = debug("server:project-dao");
 
 class ProjectDao {
   private static instance: ProjectDao;
@@ -40,6 +39,7 @@ class ProjectDao {
     page: number,
     limit: number
   ) {
+    const offset = (page - 1) * limit;
     let getProjectsQuery = getRepository(Project).createQueryBuilder("project");
     if (name) {
       getProjectsQuery = getProjectsQuery.andWhere("project.title LIKE :name", {
@@ -59,7 +59,10 @@ class ProjectDao {
       // check p.createdAt of last 7 days and sum the votes
       getProjectsQuery = getProjectsQuery.orderBy("project.createdAt DESC");
     } else if (sortBy === "popular") {
+      // write query here
     }
+
+    await getProjectsQuery.skip(offset).take(limit);
   }
 
   async findOne(projectId: number) {

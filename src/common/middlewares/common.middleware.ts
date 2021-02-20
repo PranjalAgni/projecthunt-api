@@ -1,4 +1,3 @@
-import debug from "debug";
 import { NextFunction, Request, Response } from "express";
 import createError from "http-errors";
 import { getReasonPhrase, StatusCodes } from "http-status-codes";
@@ -11,7 +10,7 @@ import {
 } from "../../utils/jwt";
 import logger from "../../utils/logger";
 
-const debugLog = debug("server:common-middleware");
+// const debugLog = debug("server:common-middleware");
 class CommonMiddleware {
   private static instance: CommonMiddleware;
 
@@ -94,6 +93,7 @@ class CommonMiddleware {
     error: Error,
     _req: Request,
     res: Response,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     _next: NextFunction
   ) {
     const statusCode = res.statusCode || StatusCodes.INTERNAL_SERVER_ERROR;

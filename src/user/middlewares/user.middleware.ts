@@ -2,11 +2,7 @@ import express from "express";
 import createError from "http-errors";
 import { StatusCodes } from "http-status-codes";
 import { assert } from "superstruct";
-import {
-  CreateUserStruct,
-  ReadUserByIdStruct,
-  ReadUserStruct
-} from "../dtos/user.dto";
+import { CreateUserStruct, ReadUserByIdStruct } from "../dtos/user.dto";
 
 class UserMiddleware {
   private static instance: UserMiddleware;

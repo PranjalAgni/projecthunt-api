@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { createConnection } from "typeorm";
 
 const seed = async () => {

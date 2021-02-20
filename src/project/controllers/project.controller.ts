@@ -1,4 +1,3 @@
-import debug from "debug";
 import { NextFunction, Request, Response } from "express";
 import createError from "http-errors";
 import { StatusCodes } from "http-status-codes";
@@ -13,7 +12,7 @@ import {
 } from "../dtos/project.dto";
 import projectService from "../services/project.service";
 
-const debugLog: debug.IDebugger = debug("server:project-controller");
+// const debugLog: debug.IDebugger = debug("server:project-controller");
 
 class ProjectController {
   private static instance: ProjectController;

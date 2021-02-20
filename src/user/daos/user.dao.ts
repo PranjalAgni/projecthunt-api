@@ -1,12 +1,11 @@
-import debug from "debug";
-import { HashTag } from "../../entities/HashTag";
 import { getConnection, getRepository } from "typeorm";
 import { Comment } from "../../entities/Comment";
+import { HashTag } from "../../entities/HashTag";
 import { User } from "../../entities/User";
 import { Vote } from "../../entities/Vote";
 import { CreateUserDto } from "../dtos/user.dto";
 
-const debugLog: debug.IDebugger = debug("server:user-dao");
+// const debugLog: debug.IDebugger = debug("server:user-dao");
 
 class UserDao {
   private static instance: UserDao;

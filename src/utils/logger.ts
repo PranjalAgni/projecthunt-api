@@ -9,7 +9,7 @@ const logger = winston.createLogger({
   exitOnError: false // do not exit on handled exceptions
 });
 
-export const loggerStreamWrite = (message: string) => {
+export const loggerStreamWrite = (message: string): void => {
   logger.info(message);
 };
 
