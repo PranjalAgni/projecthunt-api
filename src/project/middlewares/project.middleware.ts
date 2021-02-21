@@ -1,7 +1,6 @@
 import express from "express";
-import createError from "http-errors";
-import { StatusCodes } from "http-status-codes";
 import { assert } from "superstruct";
+import { unprocessableEntityError } from "../../utils/express";
 import { CreateProjectStruct } from "../dtos/project.dto";
 
 class ProjectMiddleware {
@@ -22,9 +21,8 @@ class ProjectMiddleware {
     try {
       assert(req.body, CreateProjectStruct);
       return next();
-    } catch (error) {
-      res.status(StatusCodes.UNPROCESSABLE_ENTITY);
-      next(createError(StatusCodes.UNPROCESSABLE_ENTITY, error.message));
+    } catch (ex) {
+      return unprocessableEntityError(ex, res, next);
     }
   }
 }
