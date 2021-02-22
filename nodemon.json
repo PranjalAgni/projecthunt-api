@@ -2,5 +2,5 @@
   "watch": ["src"],
   "ext": ".ts,.js",
   "ignore": [],
-  "exec": "set DEBUG=server* && node ./dist/server.js"
+  "exec": "node ./dist/server.js"
 }
