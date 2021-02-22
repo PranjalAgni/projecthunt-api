@@ -56,7 +56,7 @@ class ProjectDao {
     if (sortBy === "new") {
       getProjectsQuery = getProjectsQuery.orderBy("project.createdAt DESC");
     } else if (sortBy === "trending") {
-      // check p.createdAt of last 7 days and sum the votes
+      // sum votes of last 7 days and order by DESC, we will get trending projects
       getProjectsQuery = getProjectsQuery.orderBy("project.createdAt DESC");
     } else if (sortBy === "popular") {
       // write query here
