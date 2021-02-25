@@ -49,20 +49,35 @@ class ProjectDao {
 
     if (tag) {
       getProjectsQuery = getProjectsQuery
-        .leftJoin("project.tags", "tags")
+        .innerJoin("project.tags", "tags")
         .where("tags.tag = :tag", { tag });
     }
 
     if (sortBy === "new") {
       getProjectsQuery = getProjectsQuery.orderBy("project.createdAt DESC");
     } else if (sortBy === "trending") {
+      getProjectsQuery = getProjectsQuery
+        .innerJoin(
+          (qb) =>
+            qb
+              .select(["v.project", "COUNT(v.value) as upvotes"])
+              .from(Vote, "v")
+              .where("v.value = 1")
+              .groupBy(),
+          "votes",
+          "project.projectId = votes.project"
+        )
+        .orderBy("votes.upvotes", "DESC");
       // sum votes of last 7 days and order by DESC, we will get trending projects
+      // SELECT p.* FROM public.project as p INNER JOIN (SELECT v.project,COUNT(v.value) as upvotes FROM public.vote as v WHERE v.value = 1 AND v."createdAt" > current_date - interval '7' day GROUP BY v.project) as v ON p."projectId" = v.project ORDER BY upvotes DESC;
+
       getProjectsQuery = getProjectsQuery.orderBy("project.createdAt DESC");
     } else if (sortBy === "popular") {
       // write query here
+      //SELECT * FROM public.project as p INNER JOIN (SELECT v.project,COUNT(v.value) as upvotes FROM public.vote as v WHERE v.value = 1 GROUP BY v.project) as v ON p."projectId" = v.project ORDER BY upvotes DESC;
     }
 
-    await getProjectsQuery.skip(offset).take(limit);
+    await getProjectsQuery.skip(offset).take(limit).getMany();
   }
 
   async findOne(projectId: number) {
