@@ -63,7 +63,8 @@ class ProjectDao {
               .select(["v.project", "COUNT(v.value) as upvotes"])
               .from(Vote, "v")
               .where("v.value = 1")
-              .groupBy(),
+              .groupBy("v.project")
+              .orderBy("v.upvotes", "DESC"),
           "votes",
           "project.projectId = votes.project"
         )
