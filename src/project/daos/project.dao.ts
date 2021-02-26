@@ -63,6 +63,7 @@ class ProjectDao {
               .select(["v.project", "COUNT(v.value) as upvotes"])
               .from(Vote, "v")
               .where("v.value = 1")
+              .andWhere("v.'createdAt' > current_date - interval '7' day")
               .groupBy("v.project")
               .orderBy("v.upvotes", "DESC"),
           "votes",
