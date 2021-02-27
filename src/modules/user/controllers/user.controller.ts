@@ -5,8 +5,8 @@ import { StatusCodes } from "http-status-codes";
 import { create } from "superstruct";
 import { ReadProjectByUserIdStruct } from "../../project/dtos/project.dto";
 import projectService from "../../project/services/project.service";
-import { formatResponse } from "../../utils/express";
-import logger from "../../utils/logger";
+import { formatResponse } from "../../../utils/express";
+import logger from "../../../utils/logger";
 import {
   CreateUserDto,
   ReadUserByIdStruct,

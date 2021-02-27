@@ -1,9 +1,9 @@
-import { AuthToken } from "../../entities/AuthToken";
+import { AuthToken } from "../../../entities/AuthToken";
 import { getConnection, getRepository } from "typeorm";
-import { Comment } from "../../entities/Comment";
-import { HashTag } from "../../entities/HashTag";
-import { User } from "../../entities/User";
-import { Vote } from "../../entities/Vote";
+import { Comment } from "../../../entities/Comment";
+import { HashTag } from "../../../entities/HashTag";
+import { User } from "../../../entities/User";
+import { Vote } from "../../../entities/Vote";
 import { CreateUserDto } from "../dtos/user.dto";
 
 // const debugLog: debug.IDebugger = debug("server:user-dao");

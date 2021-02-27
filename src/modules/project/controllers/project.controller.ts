@@ -3,8 +3,8 @@ import createError from "http-errors";
 import { StatusCodes } from "http-status-codes";
 import { create } from "superstruct";
 import userService from "../../user/services/user.service";
-import { formatResponse } from "../../utils/express";
-import logger from "../../utils/logger";
+import { formatResponse } from "../../../utils/express";
+import logger from "../../../utils/logger";
 import {
   CreateCommentStruct,
   CreateProjectDto,

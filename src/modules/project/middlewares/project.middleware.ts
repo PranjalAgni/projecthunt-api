@@ -1,6 +1,6 @@
 import express from "express";
 import { assert } from "superstruct";
-import { unprocessableEntityError } from "../../utils/express";
+import { unprocessableEntityError } from "../../../utils/express";
 import { CreateProjectStruct } from "../dtos/project.dto";
 
 class ProjectMiddleware {

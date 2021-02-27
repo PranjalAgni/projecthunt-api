@@ -1,5 +1,5 @@
 import { CRUD } from "../../common/interfaces/crud.interface";
-import { User } from "../../entities/User";
+import { User } from "../../../entities/User";
 import userDao from "../daos/user.dao";
 import { CreateUserDto, ReadUserDto } from "../dtos/user.dto";
 

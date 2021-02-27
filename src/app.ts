@@ -5,9 +5,9 @@ import express from "express";
 import helmet from "helmet";
 import morgan from "morgan";
 import { createConnection } from "typeorm";
-import { CommonRoutesConfig } from "./common/common.routes.config";
-import { ProjectRoutes } from "./project/project.config.routes";
-import { UserRoutes } from "./user/user.config.routes";
+import { CommonRoutesConfig } from "./modules/common/common.routes.config";
+import { ProjectRoutes } from "./modules/project/project.config.routes";
+import { UserRoutes } from "./modules/user/user.config.routes";
 import logger, { loggerStreamWrite } from "./utils/logger";
 
 const initalizeApp = async (): Promise<express.Application> => {

@@ -1,9 +1,9 @@
-import { Comment } from "../../entities/Comment";
-import { Project } from "../../entities/Project";
+import { Comment } from "../../../entities/Comment";
+import { Project } from "../../../entities/Project";
 import { CRUD } from "../../common/interfaces/crud.interface";
 import projectDao from "../daos/project.dao";
 import { CreateCommentDto, CreateProjectDto } from "../dtos/project.dto";
-import { User } from "../../entities/User";
+import { User } from "../../../entities/User";
 
 class ProjectService implements CRUD {
   private static instance: ProjectService;

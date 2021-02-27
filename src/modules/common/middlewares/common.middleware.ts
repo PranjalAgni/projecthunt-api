@@ -1,10 +1,10 @@
 import { NextFunction, Request, Response } from "express";
 import createError from "http-errors";
 import { StatusCodes } from "http-status-codes";
-import config from "../../config";
+import config from "../../../config";
 import userService from "../../user/services/user.service";
-import { userNotAuthenticated } from "../../utils/express";
-import logger from "../../utils/logger";
+import { userNotAuthenticated } from "../../../utils/express";
+import logger from "../../../utils/logger";
 
 // const debugLog = debug("server:common-middleware");
 class CommonMiddleware {

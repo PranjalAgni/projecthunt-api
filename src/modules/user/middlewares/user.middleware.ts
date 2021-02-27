@@ -1,5 +1,5 @@
 import express from "express";
-import { unprocessableEntityError } from "../../utils/express";
+import { unprocessableEntityError } from "../../../utils/express";
 import { assert } from "superstruct";
 import { CreateUserStruct, ReadUserByIdStruct } from "../dtos/user.dto";
 
