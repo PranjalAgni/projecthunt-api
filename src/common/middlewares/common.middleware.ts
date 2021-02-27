@@ -1,16 +1,10 @@
 import { NextFunction, Request, Response } from "express";
 import createError from "http-errors";
-import { getReasonPhrase, StatusCodes } from "http-status-codes";
-import userService from "../../user/services/user.service";
+import { StatusCodes } from "http-status-codes";
 import config from "../../config";
-import userDao from "../../user/daos/user.dao";
-import {
-  createTokens,
-  verifyAccessToken,
-  verifyRefreshToken
-} from "../../utils/jwt";
-import logger from "../../utils/logger";
+import userService from "../../user/services/user.service";
 import { userNotAuthenticated } from "../../utils/express";
+import logger from "../../utils/logger";
 
 // const debugLog = debug("server:common-middleware");
 class CommonMiddleware {

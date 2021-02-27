@@ -6,8 +6,8 @@ import { create } from "superstruct";
 import { ReadProjectByUserIdStruct } from "../../project/dtos/project.dto";
 import projectService from "../../project/services/project.service";
 import { formatResponse } from "../../utils/express";
-import { createTokens } from "../../utils/jwt";
 import logger from "../../utils/logger";
+import userDao from "../daos/user.dao";
 import {
   CreateUserDto,
   ReadUserByIdStruct,
@@ -33,9 +33,9 @@ class UserController {
       const data = req.body as CreateUserDto;
       const user = await userService.create(data);
       debugLog(user);
-      const { accessToken, refreshToken } = createTokens(user);
-      res.setHeader("access-token", accessToken);
-      res.setHeader("refresh-token", refreshToken);
+      const authToken = await userDao.createUserAuthToken(user);
+      debugLog(authToken);
+      res.setHeader("authorization", authToken.sessionId);
       return formatResponse({
         res,
         result: { done: true }

@@ -79,6 +79,14 @@ class UserDao {
       .where("authToken.sessionId = :sessionId", { sessionId })
       .getOne();
   }
+
+  async createUserAuthToken(user: User) {
+    return await getRepository(AuthToken)
+      .create({
+        user
+      })
+      .save();
+  }
 }
 
 export default UserDao.getInstance();
