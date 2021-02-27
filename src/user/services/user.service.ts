@@ -50,6 +50,11 @@ class UserService implements CRUD {
     return await userDao.getHashTags();
   }
 
+  async getUserBySessionId(sessionId: string): Promise<User> {
+    const authToken = await userDao.getUserBySessionId(sessionId);
+    return authToken.user;
+  }
+
   list: (limit: number, page: number) => Promise<unknown>;
   updateById: (resourceId: number) => Promise<unknown>;
   readById: (resourceId: number) => Promise<unknown>;

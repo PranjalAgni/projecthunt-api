@@ -1,3 +1,4 @@
+import { AuthToken } from "../../entities/AuthToken";
 import { getConnection, getRepository } from "typeorm";
 import { Comment } from "../../entities/Comment";
 import { HashTag } from "../../entities/HashTag";
@@ -69,6 +70,14 @@ class UserDao {
       .createQueryBuilder("hashtag")
       .select("hashtag.tag")
       .getMany();
+  }
+
+  async getUserBySessionId(sessionId: string) {
+    return await getRepository(AuthToken)
+      .createQueryBuilder("authToken")
+      .leftJoinAndSelect("authToken.user", "user")
+      .where("authToken.sessionId = :sessionId", { sessionId })
+      .getOne();
   }
 }
 

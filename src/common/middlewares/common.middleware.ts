@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import createError from "http-errors";
 import { getReasonPhrase, StatusCodes } from "http-status-codes";
+import userService from "../../user/services/user.service";
 import config from "../../config";
 import userDao from "../../user/daos/user.dao";
 import {
@@ -9,6 +10,7 @@ import {
   verifyRefreshToken
 } from "../../utils/jwt";
 import logger from "../../utils/logger";
+import { userNotAuthenticated } from "../../utils/express";
 
 // const debugLog = debug("server:common-middleware");
 class CommonMiddleware {
@@ -22,64 +24,34 @@ class CommonMiddleware {
   }
 
   async isAuth(req: Request, res: Response, next: NextFunction) {
-    const userIsNotAuthorized = () => {
-      logger.error("User not authenitcated, going to return 401");
-      res.status(StatusCodes.UNAUTHORIZED);
-      return next(
-        createError(
-          StatusCodes.UNAUTHORIZED,
-          getReasonPhrase(StatusCodes.UNAUTHORIZED)
-        )
-      );
-    };
-
-    logger.info(`Inside auth interceptor for url ${req.originalUrl}`);
-
-    const accessToken = req.headers["access-token"];
-
-    if (typeof accessToken !== "string") {
-      return userIsNotAuthorized();
-    }
-
-    let userData = null;
     try {
-      userData = verifyAccessToken(accessToken);
-      logger.info(`Auth token valid, attaching userId`);
-      req.userId = userData.userId;
-    } catch (accessTokenEx) {
-      if (accessTokenEx.name === "TokenExpiredError") {
-        logger.error("Access token expired, going to check refresh token");
-        const refreshToken = req.headers["refresh-token"];
-        if (typeof refreshToken !== "string") {
-          logger.error("Refresh token not present in headers");
-          return userIsNotAuthorized();
-        }
-
-        try {
-          userData = verifyRefreshToken(refreshToken);
-          logger.error("Refresh token is valid");
-        } catch {
-          logger.error("Refresh token is invalid or expired");
-          return userIsNotAuthorized();
-        }
-
-        logger.info("Going to generate, new tokens now");
-        const user = await userDao.findOne(userData.userId);
-        if (!user) {
-          logger.info("No user found from data of refresh token");
-          return userIsNotAuthorized();
-        }
-
-        const tokens = createTokens(user);
-        res.setHeader("access-token", tokens.accessToken);
-        res.setHeader("refresh-token", tokens.refreshToken);
-        req.userId = user.userId;
-        logger.info("New tokens created and attaching it to userId");
-      } else {
-        return userIsNotAuthorized();
+      logger.info(`Inside auth interceptor for url ${req.originalUrl}`);
+      const authHeader = req.headers["authorization"];
+      let token = null;
+      if (authHeader.startsWith("Bearer ")) {
+        token = authHeader.substring(7, authHeader.length);
       }
+
+      if (!token) {
+        return userNotAuthenticated(res, next);
+      }
+
+      logger.info(`Extracted token: ${token}`);
+
+      const user = await userService.getUserBySessionId(token);
+
+      if (!user) {
+        logger.error("No user found");
+        return userNotAuthenticated(res, next);
+      }
+
+      logger.info("User fetched, attaching it to request object");
+      req.user = user;
+      return next();
+    } catch (error) {
+      logger.error(error.message);
+      return userNotAuthenticated(res, next);
     }
-    return next();
   }
 
   notFound(req: Request, res: Response, next: NextFunction) {
