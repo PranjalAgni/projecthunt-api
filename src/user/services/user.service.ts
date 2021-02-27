@@ -55,6 +55,11 @@ class UserService implements CRUD {
     return authToken.user;
   }
 
+  async createUserSession(user: User): Promise<string> {
+    const authToken = await userDao.createUserAuthToken(user);
+    return authToken.sessionId;
+  }
+
   list: (limit: number, page: number) => Promise<unknown>;
   updateById: (resourceId: number) => Promise<unknown>;
   readById: (resourceId: number) => Promise<unknown>;

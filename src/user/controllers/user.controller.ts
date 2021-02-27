@@ -7,7 +7,6 @@ import { ReadProjectByUserIdStruct } from "../../project/dtos/project.dto";
 import projectService from "../../project/services/project.service";
 import { formatResponse } from "../../utils/express";
 import logger from "../../utils/logger";
-import userDao from "../daos/user.dao";
 import {
   CreateUserDto,
   ReadUserByIdStruct,
@@ -33,9 +32,9 @@ class UserController {
       const data = req.body as CreateUserDto;
       const user = await userService.create(data);
       debugLog(user);
-      const authToken = await userDao.createUserAuthToken(user);
-      debugLog(authToken);
-      res.setHeader("authorization", authToken.sessionId);
+      const sessionId = await userService.createUserSession(user);
+
+      res.setHeader("authorization", sessionId);
       return formatResponse({
         res,
         result: { done: true }
