@@ -5,6 +5,8 @@ import express from "express";
 import helmet from "helmet";
 import morgan from "morgan";
 import { createConnection } from "typeorm";
+import { AuthRoutes } from "./modules/auth/auth.config.routes";
+import passport from "./modules/auth/passport";
 import { CommonRoutesConfig } from "./modules/common/common.routes.config";
 import { ProjectRoutes } from "./modules/project/project.config.routes";
 import { UserRoutes } from "./modules/user/user.config.routes";
@@ -36,8 +38,9 @@ const initalizeApp = async (): Promise<express.Application> => {
       }
     })
   );
+  app.use(passport.initialize());
 
-  routes.push(new UserRoutes(app), new ProjectRoutes(app));
+  routes.push(new AuthRoutes(app), new UserRoutes(app), new ProjectRoutes(app));
   CommonRoutesConfig.applyErrorHandleMiddlewares(app);
 
   app.get("/", (_req: express.Request, res: express.Response) => {
