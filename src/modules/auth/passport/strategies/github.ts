@@ -1,7 +1,6 @@
 import debug from "debug";
 import { Request } from "express";
-import { Profile } from "passport";
-import { Strategy as GithubStrategy } from "passport-github2";
+import { Strategy as GithubStrategy, Profile } from "passport-github2";
 import config from "../../../../config";
 
 const debugLog: debug.IDebugger = debug("server:passport-github");
@@ -15,14 +14,16 @@ export default new GithubStrategy(
   },
   async (
     req: Request,
-    accessToken: string,
-    refreshToken: string,
+    _accessToken: string,
+    _refreshToken: string,
     profile: Profile,
     cb: CallableFunction
   ) => {
-    debugLog(`Github User: ${req.user}`);
-    debugLog(accessToken);
-    debugLog(refreshToken);
+    debugLog(`Profile: ${JSON.stringify(profile.id, undefined, 3)}`);
+
+    // check if profile.id exists means user is already signed up
+    // if not signed up, it means he is a new user
+
     cb(null, profile);
   }
 );
