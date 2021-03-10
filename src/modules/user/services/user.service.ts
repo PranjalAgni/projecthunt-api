@@ -1,7 +1,13 @@
 import { CRUD } from "../../common/interfaces/crud.interface";
 import { User } from "../../../entities/User";
 import userDao from "../daos/user.dao";
-import { CreateUserDto, ReadUserDto } from "../dtos/user.dto";
+import {
+  CreateGithubUserDto,
+  CreateUserDto,
+  ReadUserDto
+} from "../dtos/user.dto";
+import { UserGithub } from "../../../entities/UserGithub";
+import { Image } from "../../../entities/Image";
 
 class UserService implements CRUD {
   private static instance: UserService;
@@ -14,7 +20,8 @@ class UserService implements CRUD {
   }
 
   async create(userData: CreateUserDto): Promise<User> {
-    return await userDao.create(userData);
+    const user = userData as User;
+    return await userDao.create(user);
   }
 
   async getAllUsers(userData: ReadUserDto) {
@@ -58,6 +65,37 @@ class UserService implements CRUD {
   async createUserSession(user: User): Promise<string> {
     const authToken = await userDao.createUserAuthToken(user);
     return authToken.sessionId;
+  }
+
+  async createGithubUser({
+    id,
+    accessToken,
+    refreshToken,
+    username,
+    _json
+  }: CreateGithubUserDto) {
+    const profileJSON = _json;
+
+    const avatar = {
+      url: profileJSON.avatar_url as string
+    } as Image;
+
+    const userData = {
+      username,
+      bio: profileJSON.bio as string,
+      avatar
+    } as User;
+
+    const user = await userDao.create(userData);
+
+    const githubUserData = {
+      githubId: +id,
+      accessToken,
+      refreshToken,
+      user
+    } as UserGithub;
+
+    return await userDao.createGithubUser(githubUserData);
   }
 
   list: (limit: number, page: number) => Promise<unknown>;

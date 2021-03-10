@@ -3,11 +3,12 @@ import { NextFunction, Request, Response } from "express";
 import createError from "http-errors";
 import { StatusCodes } from "http-status-codes";
 import { create } from "superstruct";
-import { ReadProjectByUserIdStruct } from "../../project/dtos/project.dto";
-import projectService from "../../project/services/project.service";
 import { formatResponse } from "../../../utils/express";
 import logger from "../../../utils/logger";
+import { ReadProjectByUserIdStruct } from "../../project/dtos/project.dto";
+import projectService from "../../project/services/project.service";
 import {
+  CreateGithubUserDto,
   CreateUserDto,
   ReadUserByIdStruct,
   ReadUserStruct
@@ -33,7 +34,6 @@ class UserController {
       const user = await userService.create(data);
       debugLog(user);
       const sessionId = await userService.createUserSession(user);
-
       res.setHeader("authorization", sessionId);
       return formatResponse({
         res,
@@ -143,6 +143,19 @@ class UserController {
         res,
         result: tags
       });
+    } catch (ex) {
+      logger.error(ex.message);
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR);
+      return next(createError(StatusCodes.INTERNAL_SERVER_ERROR, ex.message));
+    }
+  }
+
+  async createGithubUser(req: Request, res: Response, next: NextFunction) {
+    try {
+      const githubData = req.user as CreateGithubUserDto;
+      debugLog(githubData);
+      const githubUser = await userService.createGithubUser(githubData);
+      return formatResponse({ res, result: githubUser });
     } catch (ex) {
       logger.error(ex.message);
       res.status(StatusCodes.INTERNAL_SERVER_ERROR);

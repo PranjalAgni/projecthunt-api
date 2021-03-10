@@ -35,6 +35,15 @@ export const ReadUserByIdStruct = object({
   userId: coerce(number(), string(), (value) => +value)
 });
 
+export const CreateGithubUser = object({
+  id: string(),
+  accessToken: string(),
+  refreshToken: string(),
+  username: string(),
+  _json: object()
+});
+
 export type CreateUserDto = Infer<typeof CreateUserStruct>;
 export type ReadUserDto = Infer<typeof ReadUserStruct>;
 export type ReadUserByIdDto = Infer<typeof ReadUserByIdStruct>;
+export type CreateGithubUserDto = Infer<typeof CreateGithubUser>;

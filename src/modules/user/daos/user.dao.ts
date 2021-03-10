@@ -1,10 +1,11 @@
-import { AuthToken } from "../../../entities/AuthToken";
 import { getConnection, getRepository } from "typeorm";
+import { AuthToken } from "../../../entities/AuthToken";
 import { Comment } from "../../../entities/Comment";
 import { HashTag } from "../../../entities/HashTag";
+import { Image } from "../../../entities/Image";
 import { User } from "../../../entities/User";
+import { UserGithub } from "../../../entities/UserGithub";
 import { Vote } from "../../../entities/Vote";
-import { CreateUserDto } from "../dtos/user.dto";
 
 // const debugLog: debug.IDebugger = debug("server:user-dao");
 
@@ -18,7 +19,7 @@ class UserDao {
     return UserDao.instance;
   }
 
-  async create(user: CreateUserDto) {
+  async create(user: User) {
     return await getRepository(User).create(user).save();
   }
 
@@ -86,6 +87,14 @@ class UserDao {
         user
       })
       .save();
+  }
+
+  async createImage(image: Image) {
+    return await getRepository(Image).create(image).save();
+  }
+
+  async createGithubUser(userGithub: UserGithub) {
+    return await getRepository(UserGithub).create(userGithub).save();
   }
 }
 
