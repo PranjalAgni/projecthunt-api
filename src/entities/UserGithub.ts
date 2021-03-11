@@ -1,5 +1,6 @@
 import {
   BaseEntity,
+  Column,
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
@@ -13,6 +14,12 @@ import { User } from "./User";
 export class UserGithub extends BaseEntity {
   @PrimaryGeneratedColumn()
   githubId: number;
+
+  @Column()
+  accessToken: string;
+
+  @Column({ nullable: true })
+  refreshToken: string;
 
   @OneToOne(() => User)
   @JoinColumn({ name: "userId" })
