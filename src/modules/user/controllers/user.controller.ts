@@ -5,6 +5,7 @@ import { StatusCodes } from "http-status-codes";
 import { create } from "superstruct";
 import { formatResponse } from "../../../utils/express";
 import logger from "../../../utils/logger";
+import { addSessionToken } from "../../../utils/session";
 import { ReadProjectByUserIdStruct } from "../../project/dtos/project.dto";
 import projectService from "../../project/services/project.service";
 import {
@@ -33,8 +34,7 @@ class UserController {
       const data = req.body as CreateUserDto;
       const user = await userService.create(data);
       debugLog(user);
-      const sessionId = await userService.createUserSession(user);
-      res.setHeader("authorization", sessionId);
+      addSessionToken(res, user);
       return formatResponse({
         res,
         result: { done: true }
@@ -155,6 +155,7 @@ class UserController {
       const githubData = req.user as CreateGithubUserDto;
       debugLog(githubData);
       const githubUser = await userService.createGithubUser(githubData);
+      await addSessionToken(res, githubUser.user);
       return formatResponse({ res, result: githubUser });
     } catch (ex) {
       logger.error(ex.message);
