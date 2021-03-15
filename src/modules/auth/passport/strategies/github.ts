@@ -14,8 +14,8 @@ export default new GithubStrategy(
   },
   async (
     req: Request,
-    _accessToken: string,
-    _refreshToken: string,
+    accessToken: string,
+    refreshToken: string,
     profile: Profile,
     cb: CallableFunction
   ) => {
@@ -24,6 +24,12 @@ export default new GithubStrategy(
     // check if profile.id exists means user is already signed up
     // if not signed up, it means he is a new user
 
-    cb(null, profile);
+    const githubData = {
+      ...profile,
+      accessToken,
+      refreshToken
+    };
+
+    cb(null, githubData);
   }
 );
