@@ -8,6 +8,7 @@ import {
 } from "../dtos/user.dto";
 import { UserGithub } from "../../../entities/UserGithub";
 import { Image } from "../../../entities/Image";
+import logger from "../../../utils/logger";
 
 class UserService implements CRUD {
   private static instance: UserService;
@@ -76,6 +77,14 @@ class UserService implements CRUD {
   }: CreateGithubUserDto) {
     const profileJSON = _json;
 
+    // check if this github user, has already signed up
+    const githubUser = await userDao.getGithubUserById(parseInt(id));
+
+    if (githubUser) return githubUser;
+
+    // this is a new user, so add it to DB
+    logger.info("This is a new Github user, creating a new user now");
+
     const avatar = {
       url: profileJSON.avatar_url as string
     } as Image;
@@ -86,10 +95,11 @@ class UserService implements CRUD {
       avatar
     } as User;
 
+    // create a User
     const user = await userDao.create(userData);
 
     const githubUserData = {
-      githubId: +id,
+      githubId: parseInt(id),
       accessToken,
       refreshToken,
       user
