@@ -96,6 +96,10 @@ class UserDao {
   async createGithubUser(userGithub: UserGithub) {
     return await getRepository(UserGithub).create(userGithub).save();
   }
+
+  async getGithubUserById(id: number) {
+    return await getRepository(UserGithub).findOne({ githubId: id });
+  }
 }
 
 export default UserDao.getInstance();
