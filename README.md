@@ -36,7 +36,7 @@ docker-compose up --build
 If you get DB does not exists, simply run this:
 
 ```sh
-sh scripts/initdb.sh
+sh scripts/sh/initdb.sh
 ```
 
 ## Scripts
