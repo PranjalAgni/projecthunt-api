@@ -56,3 +56,5 @@ Fetches a single project by project id
 ### POST /projects/{projectId}/comments [x]
 
 ### GET /projects/{projectId}/comments [x]
+
+[] Refactor codebase
