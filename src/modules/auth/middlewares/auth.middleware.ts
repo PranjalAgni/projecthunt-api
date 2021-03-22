@@ -6,15 +6,14 @@ import { NextFunction, Request, Response } from "express";
 import createError from "http-errors";
 import { StatusCodes } from "http-status-codes";
 
-// const debugLog = debug("server:common-middleware");
-class CommonMiddleware {
-  private static instance: CommonMiddleware;
+class AuthMiddleware {
+  private static instance: AuthMiddleware;
 
   static getInstance() {
-    if (!CommonMiddleware.instance) {
-      CommonMiddleware.instance = new CommonMiddleware();
+    if (!AuthMiddleware.instance) {
+      AuthMiddleware.instance = new AuthMiddleware();
     }
-    return CommonMiddleware.instance;
+    return AuthMiddleware.instance;
   }
 
   async isAuth(req: Request, res: Response, next: NextFunction) {
@@ -72,4 +71,4 @@ class CommonMiddleware {
   }
 }
 
-export default CommonMiddleware.getInstance();
+export default AuthMiddleware.getInstance();

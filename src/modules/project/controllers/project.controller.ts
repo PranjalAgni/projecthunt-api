@@ -1,16 +1,16 @@
-import { NextFunction, Request, Response } from "express";
-import createError from "http-errors";
-import { StatusCodes } from "http-status-codes";
-import { create } from "superstruct";
-import userService from "../../user/services/user.service";
-import { formatResponse } from "../../../utils/express";
-import logger from "../../../utils/logger";
 import {
   CreateCommentStruct,
   CreateProjectDto,
   ReadProjectIdStruct
-} from "../dtos/project.dto";
-import projectService from "../services/project.service";
+} from "@project/dtos/project.dto";
+import projectService from "@project/services/project.service";
+import userService from "@user/services/user.service";
+import { formatResponse } from "@utils/express";
+import logger from "@utils/logger";
+import { NextFunction, Request, Response } from "express";
+import createError from "http-errors";
+import { StatusCodes } from "http-status-codes";
+import { create } from "superstruct";
 
 // const debugLog: debug.IDebugger = debug("server:project-controller");
 

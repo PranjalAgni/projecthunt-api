@@ -1,8 +1,8 @@
+import { CommonRoutesConfig } from "@common/common.routes.config";
+import commonMiddleware from "@common/middlewares/common.middleware";
+import projectController from "@project/controllers/project.controller";
+import projectMiddleware from "@project/middlewares/project.middleware";
 import express from "express";
-import { CommonRoutesConfig } from "../common/common.routes.config";
-import commonMiddleware from "../common/middlewares/common.middleware";
-import projectController from "./controllers/project.controller";
-import projectMiddleware from "./middlewares/project.middleware";
 
 export class ProjectRoutes extends CommonRoutesConfig {
   constructor(app: express.Application) {

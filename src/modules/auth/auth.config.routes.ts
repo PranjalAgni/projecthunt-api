@@ -1,7 +1,7 @@
+import { CommonRoutesConfig } from "@common/common.routes.config";
+import userController from "@user/controllers/user.controller";
 import debug from "debug";
 import express from "express";
-import { CommonRoutesConfig } from "../common/common.routes.config";
-import userController from "../user/controllers/user.controller";
 import passport from "./passport";
 
 const debugLog: debug.IDebugger = debug("server:auth-routes");

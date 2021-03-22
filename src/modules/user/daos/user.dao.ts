@@ -1,11 +1,11 @@
+import { AuthToken } from "@entities/AuthToken";
+import { Comment } from "@entities/Comment";
+import { HashTag } from "@entities/HashTag";
+import { Image } from "@entities/Image";
+import { User } from "@entities/User";
+import { UserGithub } from "@entities/UserGithub";
+import { Vote } from "@entities/Vote";
 import { getConnection, getRepository } from "typeorm";
-import { AuthToken } from "../../../entities/AuthToken";
-import { Comment } from "../../../entities/Comment";
-import { HashTag } from "../../../entities/HashTag";
-import { Image } from "../../../entities/Image";
-import { User } from "../../../entities/User";
-import { UserGithub } from "../../../entities/UserGithub";
-import { Vote } from "../../../entities/Vote";
 
 // const debugLog: debug.IDebugger = debug("server:user-dao");
 

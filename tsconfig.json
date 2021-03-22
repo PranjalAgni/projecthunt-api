@@ -12,7 +12,14 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "paths": {
-      "*": ["node_modules/*", "./types/*"]
+      "*": ["node_modules/*", "./types/*"],
+      "@auth/*":["src/modules/auth/*"],
+      "@common/*":["src/modules/common/*"],
+      "@project/*":["src/modules/project/*"],
+      "@user/*":["src/modules/user/*"],
+      "@entities/*":["src/entities/*"],
+      "@config/*": ["src/config/*"],
+      "@utils/*": ["src/utils/*"],
     },
   },
   "include": ["src/**/*", "./types/*"],

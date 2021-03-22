@@ -1,7 +1,7 @@
+import { CreateProjectStruct } from "@project/dtos/project.dto";
+import { unprocessableEntityError } from "@utils/express";
 import express from "express";
 import { assert } from "superstruct";
-import { unprocessableEntityError } from "../../../utils/express";
-import { CreateProjectStruct } from "../dtos/project.dto";
 
 class ProjectMiddleware {
   private static instance: ProjectMiddleware;

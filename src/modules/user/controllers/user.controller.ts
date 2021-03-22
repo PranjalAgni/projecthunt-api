@@ -1,20 +1,20 @@
-import debug from "debug";
-import { NextFunction, Request, Response } from "express";
-import createError from "http-errors";
-import { StatusCodes } from "http-status-codes";
-import { create } from "superstruct";
-import { formatResponse } from "../../../utils/express";
-import logger from "../../../utils/logger";
-import { addSessionToken } from "../../../utils/session";
-import { ReadProjectByUserIdStruct } from "../../project/dtos/project.dto";
-import projectService from "../../project/services/project.service";
+import { ReadProjectByUserIdStruct } from "@project/dtos/project.dto";
+import projectService from "@project/services/project.service";
 import {
   CreateGithubUserDto,
   CreateUserDto,
   ReadUserByIdStruct,
   ReadUserStruct
-} from "../dtos/user.dto";
-import userService from "../services/user.service";
+} from "@user/dtos/user.dto";
+import userService from "@user/services/user.service";
+import { formatResponse } from "@utils/express";
+import logger from "@utils/logger";
+import { addSessionToken } from "@utils/session";
+import debug from "debug";
+import { NextFunction, Request, Response } from "express";
+import createError from "http-errors";
+import { StatusCodes } from "http-status-codes";
+import { create } from "superstruct";
 
 const debugLog: debug.IDebugger = debug("server:user-controller");
 

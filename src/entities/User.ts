@@ -29,7 +29,7 @@ export class User extends BaseEntity {
   })
   password: string;
 
-  @OneToOne(() => Image, { nullable: true })
+  @OneToOne(() => Image, { nullable: true, cascade: true })
   @JoinColumn({ name: "avatar" })
   @Column({ nullable: true })
   avatar: Image;

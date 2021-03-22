@@ -1,3 +1,9 @@
+import { AuthRoutes } from "@auth/auth.config.routes";
+import passport from "@auth/passport";
+import { CommonRoutesConfig } from "@common/common.routes.config";
+import { ProjectRoutes } from "@project/project.config.routes";
+import { UserRoutes } from "@user/user.config.routes";
+import logger, { loggerStreamWrite } from "@utils/logger";
 import compression from "compression";
 import cors from "cors";
 import debug from "debug";
@@ -5,12 +11,6 @@ import express from "express";
 import helmet from "helmet";
 import morgan from "morgan";
 import { createConnection } from "typeorm";
-import { AuthRoutes } from "./modules/auth/auth.config.routes";
-import passport from "./modules/auth/passport";
-import { CommonRoutesConfig } from "./modules/common/common.routes.config";
-import { ProjectRoutes } from "./modules/project/project.config.routes";
-import { UserRoutes } from "./modules/user/user.config.routes";
-import logger, { loggerStreamWrite } from "./utils/logger";
 
 const initalizeApp = async (): Promise<express.Application> => {
   const app: express.Application = express();
@@ -41,6 +41,7 @@ const initalizeApp = async (): Promise<express.Application> => {
   app.use(passport.initialize());
 
   routes.push(new AuthRoutes(app), new UserRoutes(app), new ProjectRoutes(app));
+
   CommonRoutesConfig.applyErrorHandleMiddlewares(app);
 
   app.get("/", (_req: express.Request, res: express.Response) => {

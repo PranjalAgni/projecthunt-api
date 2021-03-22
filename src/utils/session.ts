@@ -1,6 +1,6 @@
+import { User } from "@entities/User";
+import userService from "@user/services/user.service";
 import { Response } from "express";
-import { User } from "../entities/User";
-import userService from "../modules/user/services/user.service";
 
 export const addSessionToken = async (
   res: Response,

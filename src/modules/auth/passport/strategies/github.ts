@@ -1,8 +1,7 @@
+import config from "@config/index";
 import debug from "debug";
 import { Request } from "express";
-import { Strategy as GithubStrategy, Profile } from "passport-github2";
-import config from "../../../../config";
-
+import { Profile, Strategy as GithubStrategy } from "passport-github2";
 const debugLog: debug.IDebugger = debug("server:passport-github");
 
 export default new GithubStrategy(
@@ -13,7 +12,7 @@ export default new GithubStrategy(
     passReqToCallback: true
   },
   async (
-    req: Request,
+    _req: Request,
     accessToken: string,
     refreshToken: string,
     profile: Profile,

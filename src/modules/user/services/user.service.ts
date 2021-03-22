@@ -1,14 +1,14 @@
-import { CRUD } from "../../common/interfaces/crud.interface";
-import { User } from "../../../entities/User";
-import userDao from "../daos/user.dao";
+import { CRUD } from "@common/interfaces/crud.interface";
+import { Image } from "@entities/Image";
+import { User } from "@entities/User";
+import { UserGithub } from "@entities/UserGithub";
+import userDao from "@user/daos/user.dao";
 import {
   CreateGithubUserDto,
   CreateUserDto,
   ReadUserDto
-} from "../dtos/user.dto";
-import { UserGithub } from "../../../entities/UserGithub";
-import { Image } from "../../../entities/Image";
-import logger from "../../../utils/logger";
+} from "@user/dtos/user.dto";
+import logger from "@utils/logger";
 
 class UserService implements CRUD {
   private static instance: UserService;

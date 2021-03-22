@@ -2,11 +2,11 @@
 require("dotenv-safe").config({
   allowEmptyValues: true
 });
-
+require("module-alias/register");
+import config from "@config/index";
 import debug from "debug";
 import "reflect-metadata";
 import initalizeApp from "./app";
-import config from "./config";
 
 const startServer = async () => {
   const debugLog: debug.IDebugger = debug("server");
