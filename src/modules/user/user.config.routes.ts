@@ -1,5 +1,5 @@
 import { CommonRoutesConfig } from "@common/common.routes.config";
-import commonMiddleware from "@common/middlewares/common.middleware";
+import authMiddleware from "@auth/middlewares/auth.middleware";
 import userController from "@user/controllers/user.controller";
 import userMiddleware from "@user/middlewares/user.middleware";
 import express from "express";
@@ -23,7 +23,7 @@ export class UserRoutes extends CommonRoutesConfig {
 
     this.app
       .route("/users/:userId/votes")
-      .get([commonMiddleware.isAuth, userController.getVotesByUserId]);
+      .get([authMiddleware.isAuth, userController.getVotesByUserId]);
 
     this.app
       .route("/users/:userId/comments")

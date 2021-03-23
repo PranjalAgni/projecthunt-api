@@ -1,5 +1,5 @@
 import { CommonRoutesConfig } from "@common/common.routes.config";
-import commonMiddleware from "@common/middlewares/common.middleware";
+import authMiddleware from "@auth/middlewares/auth.middleware";
 import projectController from "@project/controllers/project.controller";
 import projectMiddleware from "@project/middlewares/project.middleware";
 import express from "express";
@@ -19,19 +19,16 @@ export class ProjectRoutes extends CommonRoutesConfig {
 
     this.app
       .route("/projects/:projectId")
-      .get([commonMiddleware.isAuth, projectController.getProjectById]);
+      .get([authMiddleware.isAuth, projectController.getProjectById]);
 
     this.app
       .route("/projects/:projectId/vote")
-      .post([
-        commonMiddleware.isAuth,
-        projectController.getTotalVotesOfProject
-      ]);
+      .post([authMiddleware.isAuth, projectController.getTotalVotesOfProject]);
 
     this.app
       .route("/projects/:projectId/comments")
-      .get([commonMiddleware.isAuth, projectController.getComments])
-      .post([commonMiddleware.isAuth, projectController.createComment]);
+      .get([authMiddleware.isAuth, projectController.getComments])
+      .post([authMiddleware.isAuth, projectController.createComment]);
 
     return this.app;
   }
