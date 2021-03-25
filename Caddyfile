@@ -1,0 +1,4 @@
+api.projecthunt.localhost {
+  reverse_proxy localhost:3000
+}
+
