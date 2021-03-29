@@ -58,3 +58,7 @@ Fetches a single project by project id
 ### GET /projects/{projectId}/comments [x]
 
 [] Refactor codebase
+[] Write a exception handling class
+[] Add salting for password hashing
+[] Integrate Sentry for monitoring(logging)
+[] Handle edge cases for logout
