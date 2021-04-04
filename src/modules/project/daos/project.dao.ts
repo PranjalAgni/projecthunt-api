@@ -2,7 +2,7 @@ import { Comment } from "@entities/Comment";
 import { Project } from "@entities/Project";
 import { Vote } from "@entities/Vote";
 import { CreateProjectDto } from "@project/dtos/project.dto";
-import { getRepository } from "typeorm";
+import { getConnection, getRepository } from "typeorm";
 
 // const debugLog: debug.IDebugger = debug("server:project-dao");
 
@@ -76,7 +76,10 @@ class ProjectDao {
       getProjectsQuery = getProjectsQuery.orderBy("project.createdAt DESC");
     } else if (sortBy === "popular") {
       // write query here
-      //SELECT * FROM public.project as p INNER JOIN (SELECT v.project,COUNT(v.value) as upvotes FROM public.vote as v WHERE v.value = 1 GROUP BY v.project) as v ON p."projectId" = v.project ORDER BY upvotes DESC;
+      //
+      return await getConnection().query(
+        `SELECT * FROM public.project as p INNER JOIN (SELECT v.project,COUNT(v.value) as upvotes FROM public.vote as v WHERE v.value = 1 GROUP BY v.project) as v ON p."projectId" = v.project ORDER BY upvotes DESC;`
+      );
     }
 
     await getProjectsQuery.skip(offset).take(limit).getMany();

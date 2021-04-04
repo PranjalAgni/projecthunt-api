@@ -18,6 +18,20 @@ export const CreateProjectStruct = object({
   youtube: optional(string())
 });
 
+export const ReadProjectStruct = object({
+  sortBy: defaulted(string(), "popular"),
+  name: optional(string()),
+  tag: optional(string()),
+  page: defaulted(
+    coerce(number(), string(), (value) => +value),
+    1
+  ),
+  limit: defaulted(
+    coerce(number(), string(), (value) => +value),
+    10
+  )
+});
+
 export const ReadProjectByUserIdStruct = object({
   userId: coerce(number(), string(), (value) => +value),
   page: defaulted(
@@ -40,5 +54,6 @@ export const ReadProjectIdStruct = object({
   projectId: coerce(number(), string(), (value) => +value)
 });
 
+export type ReadProjectDto = Infer<typeof ReadProjectStruct>;
 export type CreateProjectDto = Infer<typeof CreateProjectStruct>;
 export type CreateCommentDto = Infer<typeof CreateCommentStruct>;

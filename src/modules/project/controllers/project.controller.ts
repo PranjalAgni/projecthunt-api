@@ -1,7 +1,8 @@
 import {
   CreateCommentStruct,
   CreateProjectDto,
-  ReadProjectIdStruct
+  ReadProjectIdStruct,
+  ReadProjectStruct
 } from "@project/dtos/project.dto";
 import projectService from "@project/services/project.service";
 import userService from "@user/services/user.service";
@@ -28,6 +29,21 @@ class ProjectController {
     try {
       const body = req.body as CreateProjectDto;
       const project = await projectService.create(body);
+      return formatResponse({
+        res,
+        result: project
+      });
+    } catch (ex) {
+      logger.error(ex.message);
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR);
+      return next(createError(StatusCodes.INTERNAL_SERVER_ERROR, ex.message));
+    }
+  }
+
+  async getProjects(req: Request, res: Response, next: NextFunction) {
+    try {
+      const body = create(req.params, ReadProjectStruct);
+      const project = await projectService.getProjects(body);
       return formatResponse({
         res,
         result: project

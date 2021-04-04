@@ -3,7 +3,11 @@ import { Comment } from "@entities/Comment";
 import { Project } from "@entities/Project";
 import { User } from "@entities/User";
 import projectDao from "@project/daos/project.dao";
-import { CreateCommentDto, CreateProjectDto } from "@project/dtos/project.dto";
+import {
+  CreateCommentDto,
+  CreateProjectDto,
+  ReadProjectDto
+} from "@project/dtos/project.dto";
 
 class ProjectService implements CRUD {
   private static instance: ProjectService;
@@ -21,6 +25,11 @@ class ProjectService implements CRUD {
 
   async findById(projectId: number) {
     return await projectDao.findById(projectId);
+  }
+
+  async getProjects(data: ReadProjectDto) {
+    const { page, limit, sortBy, name, tag } = data;
+    return await projectDao.getProjects(sortBy, name, tag, page, limit);
   }
 
   async getProjectByUserId(userId: number, page: number, limit: number) {

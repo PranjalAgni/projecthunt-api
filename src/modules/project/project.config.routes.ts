@@ -12,6 +12,7 @@ export class ProjectRoutes extends CommonRoutesConfig {
   configureRoutes(): express.Application {
     this.app
       .route("/projects")
+      .get(projectController.getProjects)
       .post([
         projectMiddleware.validateCreateProjectBody,
         projectController.createProject
