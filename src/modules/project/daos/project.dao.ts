@@ -2,6 +2,7 @@ import { Comment } from "@entities/Comment";
 import { Project } from "@entities/Project";
 import { Vote } from "@entities/Vote";
 import { CreateProjectDto } from "@project/dtos/project.dto";
+import logger from "@utils/logger";
 import { getConnection, getRepository } from "typeorm";
 
 // const debugLog: debug.IDebugger = debug("server:project-dao");
@@ -32,7 +33,7 @@ class ProjectDao {
       .getMany();
   }
 
-  async getProjects(
+  async getProjectsV2(
     sortBy: string,
     name: string,
     tag: string,
@@ -83,6 +84,41 @@ class ProjectDao {
     }
 
     await getProjectsQuery.skip(offset).take(limit).getMany();
+  }
+
+  async getProjects(
+    sortBy: string,
+    name: string,
+    tag: string,
+    page: number,
+    limit: number
+  ) {
+    logger.info({ sortBy, name, tag, page, limit });
+    const offset = (page - 1) * limit;
+    let getProjectsQuery = getRepository(Project).createQueryBuilder("project");
+
+    if (name) {
+      getProjectsQuery = getProjectsQuery.where("project.title LIKE :name", {
+        name: `%${name}%`
+      });
+    } else if (tag) {
+      getProjectsQuery = getProjectsQuery
+        .innerJoin("project.tags", "tags")
+        .where("tags.tag = :tag", { tag });
+    } else if (sortBy === "new") {
+      getProjectsQuery = getProjectsQuery.orderBy("project.createdAt", "DESC");
+    } else if (sortBy === "trending") {
+      // sum votes of last 7 days and order by DESC, we will get trending projects
+      return await getConnection().query(
+        `SELECT p.* FROM public.project as p INNER JOIN (SELECT v.project,COUNT(v.value) as upvotes FROM public.vote as v WHERE v.value = 1 AND v."createdAt" > current_date - interval '7' day GROUP BY v.project) as v ON p."projectId" = v.project ORDER BY upvotes DESC OFFSET ${offset} LIMIT ${limit};`
+      );
+    } else if (sortBy === "popular") {
+      return await getConnection().query(
+        `SELECT * FROM public.project as p INNER JOIN (SELECT v.project,COUNT(v.value) as upvotes FROM public.vote as v WHERE v.value = 1 GROUP BY v.project) as v ON p."projectId" = v.project ORDER BY upvotes DESC OFFSET ${offset} LIMIT ${limit};`
+      );
+    }
+
+    return await getProjectsQuery.skip(offset).take(limit).getMany();
   }
 
   async findOne(projectId: number) {

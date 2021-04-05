@@ -42,7 +42,7 @@ class ProjectController {
 
   async getProjects(req: Request, res: Response, next: NextFunction) {
     try {
-      const body = create(req.params, ReadProjectStruct);
+      const body = create(req.query, ReadProjectStruct);
       const project = await projectService.getProjects(body);
       return formatResponse({
         res,
