@@ -49,6 +49,22 @@ sh scripts/sh/initdb.sh
 6. start:dev - Start the server in dev mode
 7. lint - Lint the TS files with eslint
 
+## HTTPS Support
+
+You can run this api over https now with the help of [Caddy](https://caddyserver.com/) reverse proxy
+
+Steps to enable HTTPS:
+
+1. [Download](https://caddyserver.com/download) and setup Caddy
+2. Open a new terminal and run `caddy run Caddyfile` in the root of project
+3. Enjoy API over HTTPS now 👍
+
+In future will move Caddy to Docker, so we dont need to install it seperately
+
+## Contributions are welcome ⚡
+
+Drop a pull request, and we will review and bring it to master
+
 ## Show your support
 
 Give a ⭐️ if this project helped you!
