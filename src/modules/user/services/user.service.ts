@@ -9,6 +9,7 @@ import {
   ReadUserDto
 } from "@user/dtos/user.dto";
 import logger from "@utils/logger";
+import { hashPassword } from "@utils/password";
 
 class UserService implements CRUD {
   private static instance: UserService;
@@ -22,6 +23,7 @@ class UserService implements CRUD {
 
   async create(userData: CreateUserDto): Promise<User> {
     const user = userData as User;
+    user.password = await hashPassword(user.password);
     return await userDao.create(user);
   }
 
