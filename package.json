@@ -8,16 +8,16 @@
     "watch": "tsc -w",
     "clean": "rimraf ./dist",
     "build": "npm run clean && tsc",
-    "start": "cross-env NODE_ENV=production npm run build && node dist/server.js",
+    "start": "cross-env NODE_ENV=production npm run build && cross-env DEBUG=server* node dist/server.js",
     "start:dev": "cross-env DEBUG=server* nodemon",
     "lint": "eslint . --ext .ts"
   },
   "_moduleAliases": {
-    "@auth":"dist/modules/auth",
-    "@common":"dist/modules/common",
-    "@project":"dist/modules/project",
-    "@user":"dist/modules/user",
-    "@entities":"dist/entities",
+    "@auth": "dist/modules/auth",
+    "@common": "dist/modules/common",
+    "@project": "dist/modules/project",
+    "@user": "dist/modules/user",
+    "@entities": "dist/entities",
     "@config": "dist/config",
     "@utils": "dist/utils"
   },

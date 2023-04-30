@@ -5,6 +5,7 @@ require("dotenv-safe").config({
 require("module-alias/register");
 import config from "@config/index";
 import debug from "debug";
+import logger from "@utils/logger";
 import "reflect-metadata";
 import initalizeApp from "./app";
 
@@ -14,6 +15,9 @@ const startServer = async () => {
   const app = await initalizeApp();
 
   app.listen(config.port, () => {
+    logger.info(
+      `Server running at http://localhost:${config.port} in ${config.env} mode`
+    );
     debugLog(
       `Server running at http://localhost:${config.port} in ${config.env} mode`
     );

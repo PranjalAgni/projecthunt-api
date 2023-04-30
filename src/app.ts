@@ -42,13 +42,13 @@ const initalizeApp = async (): Promise<express.Application> => {
 
   routes.push(new AuthRoutes(app), new UserRoutes(app), new ProjectRoutes(app));
 
-  CommonRoutesConfig.applyErrorHandleMiddlewares(app);
-
   app.get("/", (_req: express.Request, res: express.Response) => {
     res
       .status(200)
       .send(`Server running at http://localhost:${process.env.PORT}`);
   });
+
+  CommonRoutesConfig.applyErrorHandleMiddlewares(app);
 
   routes.forEach((route: CommonRoutesConfig) => {
     debugLog(`Routes configured for ${route.getName()}`);
